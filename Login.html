@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html ><!--Head-->
+<head>
+    <meta charset="utf-8">
+    <title>登录页面</title>
+    <meta name="description" content="login page">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!--Basic Styles-->
+    <link href="style/bootstrap.css" rel="stylesheet">
+    <link href="style/font-awesome.css" rel="stylesheet">
+    <!--Beyond styles-->
+    <link id="beyond-link" href="style/beyond.css" rel="stylesheet">
+    <link href="style/demo.css" rel="stylesheet">
+    <link href="style/animate.css" rel="stylesheet">
+</head>
+<!--Body-->
+<body>
+    <div class="login-container animated fadeInDown">
+        <form action="Login.php" method="post">
+            <div class="loginbox bg-white">
+                <div class="loginbox-title">登录</div>
+                <div class="loginbox-textbox">
+                    <input value="admin" class="form-control" placeholder="请输入用户名" name="username" type="text" id="u">
+                </div>
+                <div class="loginbox-textbox">
+                    <input class="form-control" placeholder="请输入密码" name="pwd" type="password" id="p">
+                </div>
+                <div class="loginbox-submit">
+                    <input class="btn btn-primary btn-block" value="登录" type="button" id="button">
+                </div>
+            </div>
+                <div class="logobox">
+                    <p class="text-center">需要查询数据表请先登录</p>
+                </div>
+        </form>
+    </div>
+    <!--Basic Scripts-->
+    <script src="style/jquery.js"></script>
+    <script src="style/bootstrap.js"></script>
+    <script src="style/jquery_002.js"></script>
+    <!--Beyond Scripts-->
+    <script src="style/beyond.js"></script>
+	<script type="text/javascript">
+	$("#button").click(function(){
+        var data = {};
+        var u = $("#u").val();
+        var p = $("#p").val();
+        data[0] = u; 
+        data[1] = p;
+        $.ajax({
+                url:'Login.php',
+                data:data,
+                type:"post",
+                success:function(re){
+                        if(re=='ok'){
+                            window.location.href="Xssd.php";
+                        }else if(re=='error'){
+                            console.log(re);
+                            alert("用户名或密码错误");
+                        }                        
+                }
+        })
+})
+
+</script>
+</body><!--Body Ends--></html>

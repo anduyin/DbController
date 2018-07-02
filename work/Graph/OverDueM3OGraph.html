@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+
+<head>
+    <meta charset="utf-8">
+    <title>ECharts</title>
+
+    <!-- 使用本地的js文件-->
+    <!-- 引入 ECharts 文件  这里要echarts4-->
+    <!-- <script src="./echarts.js"></script> -->
+    <script src="./echarts.min.js"></script>
+    <!--下面几个是从服务器下载的 -->
+    <script src="../jquery-3.2.1.min.js"></script>
+    <script src="../bootstrap.min.js"></script>
+    <link href="../bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body style="height: 100%; margin: 0">
+    <input type="button" name="Submit" onclick="javascript:history.back(-1);" value="返回之前页面">
+    <div id="main" style="height: 100%"></div>
+    <!-- 这里用于指示是哪个文件 -->
+    <div id="msign" value="m3o"></div>
+
+    <script src="./ajaxForOverDueM.js"></script>
+</body>
+
+</html>
