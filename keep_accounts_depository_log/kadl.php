@@ -3,14 +3,27 @@
  *  */
 	
 	require_once '../Common.php';
-	$sql = "SELECT service,number,cost,date FROM `keep_accounts_depository_log`";
-	$firstData = mysqli_query($link, $sql);
-	$firstOpen = $firstData->fetch_all(MYSQLI_NUM);//第一次打开内容
+	require_once 'kadlController.php';
+	$today = date("Y-m-d");
+    $day=getthemonth($today);
+    $time1 = $day[0];
+    $time2 = $day[1];
+	$query = "SELECT number,cost,date FROM `keep_accounts_depository_log` where date >= \"$time1\" and date <= \"$time2\"";
+	$result = mysqli_query($link, $query);
+	$arr = $result->fetch_all(MYSQLI_ASSOC);
 	mysqli_close($link);
+	$total = count($arr);
+	$array = array();
+	$num = 0;
+	for($i=0;$i<$total;$i+=5){
+		$key = 0+$i;	
+		$data = array_slice($arr,$key,5);
+		$array[$num] = arrayMain($data);
+		$num++;
+	}
 	$head = array('服务名称','服务调用次数','服务调用总费用','统计日期');
 	$headjson = json_encode($head);
-	$json = json_encode($firstOpen);
-	//echo $json;exit;
+	$json = json_encode($array);
 ?>
 <!DOCTYPE html>
 <html style="position: absolute; left: 0; top: 0;">

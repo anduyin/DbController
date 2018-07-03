@@ -175,6 +175,17 @@ function arrayMain($data){
 	}
 	return $array;
 }
+/**
+ * 获取某月第一天和最后一天
+ * @param  [string] $date [日期]
+ * @return [array]       [包含第一天和最后一天的日期]
+ */
+function getthemonth($date){
+	$firstday = date('Y-m-01', strtotime($date));
+	$lastday = date('Y-m-d', strtotime("$firstday +1 month -1 day"));
+	return array($firstday,$lastday);
+}
+   
 if($_POST&&$_POST[2]=='search'){
 	searchDate($link);
 }elseif($_POST&&$_POST[2]=='money'){
