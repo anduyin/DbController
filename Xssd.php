@@ -431,6 +431,31 @@ $show = array();
                             </li>
                         </ul>                            
                     </li>
+                    <li id = 'pic'>
+                        <a href="#" class="menu-dropdown">
+                            <i class="glyphicon glyphicon-download-alt" style="width:30px;text-align:center"></i>
+                            <span class="menu-text">催收栏目</span>
+                            <i class="menu-expand"></i>
+                        </a>
+                        <ul class="submenu">
+                            <li>
+                                <a href="daily_collection_amount_statistics_cg/dcasc.php" target="frame1">
+                                    <span class="menu-text">
+                                        催收金额预计(存管)
+                                    </span>
+                                    <i class="menu-expand"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="daily_collection_amount_statistics_tg/dcast.php" target="frame1">
+                                    <span class="menu-text">
+                                        催收金额预计(托管)
+                                    </span>
+                                    <i class="menu-expand"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                       
                 </ul>
                 <!-- /Sidebar Menu -->
