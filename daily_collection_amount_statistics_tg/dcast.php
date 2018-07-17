@@ -6,10 +6,11 @@
 	
 	require_once '../Common.php';
     $today = new DateTime();
-    $tenDay = $today->modify("+10 day")->format("Y-m-d");
+    $endDay = $today->modify("+7 day")->format("Y-m-d");
     $today = new DateTime();
-    $time = $today->format("Y-m-d");
-	$query2 = "select * from daily_collection_amount_statistics_tg where date>='$time' and date<='$tenDay' and update_time = '$time'";
+    $time = $today->modify("-3 day")->format("Y-m-d");
+    $day = date('Y-m-d',time());
+	$query2 = "select * from daily_collection_amount_statistics_tg where date>='$time' and date<='$endDay' and update_time = '$day'";
 	$result = mysqli_query($link, $query2);
 	$arr2 = $result->fetch_all(MYSQLI_ASSOC);//默认第一次打开的查询数据
 	mysqli_close($link);
@@ -140,15 +141,15 @@
 				<tr>
 					<td width="6%" class="active"><?php echo $v['date'];?></td>
 					<td width="6%" class="active"><?php echo number_format((($v['repay_money'])/10000),2,'.','')?></td>
+                    <td width="6%" class="active"><?php echo number_format((($v['manage_money'])/10000),2,'.','')?></td>
 					<td width="6%" class="active" <?php if($v['date']>=$now&&$v['date']<=$end){?>style='background-color:#C6EFCE'<?php }?>>
-						<?php if($v['manage_money']===Null){?>
+						<?php if($v['true_repay_money']===Null){?>
 							<?php echo '';?>
 						<?php }else{?>
-							<?php echo number_format((($v['manage_money'])/10000),2,'.','');?>
+							<?php echo number_format((($v['true_repay_money'])/10000),2,'.','');?>
 						<?php }?>
-					</td>					
-					<td width="6%" class="active"><?php echo number_format((($v['true_repay_money'])/10000),2,'.','')?></td>
-					<td width="6%" class="active" <?php if($v['date']>$now&&$v['date']<=$end){?>style='background-color:#C6EFCE'<?php }?>>
+					</td>
+					<td width="6%" class="active" <?php if($v['date']>=$now&&$v['date']<=$end){?>style='background-color:#C6EFCE'<?php }?>>
 						<?php if($v['true_manage_money']===Null){?>
 							<?php echo '';?>
 						<?php }else{?>
@@ -195,19 +196,16 @@
 					var true_manage_money = arr[i]['true_manage_money'];
 					var update_time = arr[i]['update_time'];
 					if(date>='<?php echo $now?>'&&date<='<?php echo $end?>'){						
-						 tmm = "<td width='6%' class='active' style='background-color:#C6EFCE'>"+manage_money+"</td>";
+						 tmm = "<td width='6%' class='active' style='background-color:#C6EFCE'>"+true_repay_money+"</td>";
+                         tam = "<td width='6%' class='active' style='background-color:#C6EFCE'>"+true_manage_money+"</td>";
 					}else{
-						tmm = "<td width='6%' class='active'>"+true_manage_money+"</td>";
-					} 
-					if(date>'<?php echo $now?>'&&date<='<?php echo $end?>'){
-						tam = "<td width='6%' class='active' style='background-color:#C6EFCE'>"+true_manage_money+"</td>";
-					}else{
-						tam = "<td width='6%' class='active'>"+true_manage_money+"</td>";
+						tmm = "<td width='6%' class='active'>"+true_repay_money+"</td>";
+                        tam = "<td width='6%' class='active'>"+true_manage_money+"</td>";
 					}
 					str += "<tr><td width='6%' class='active'>"+date+"</td>";
 					str += "<td width='6%' class='active'>"+repay_money+"</td>";
+					str += "<td width='6%' class='active'>"+manage_money+"</td>";
 					str += tmm;
-					str += "<td width='6%' class='active'>"+true_repay_money+"</td>";
 					str += tam;
 					str += "<td width='6%' class='active'>"+update_time+"</td></tr>";
 				}			
