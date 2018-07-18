@@ -2,28 +2,15 @@
 require_once 'Common.php';
 $permission = $_SESSION['permission'];
 $show = array();
-    if(strpos($permission,'financeCg')===false){
-        $show[] = '$("#financeCg").css("display","none")';
-    }
-    if(strpos($permission,'finacn')===false){
-        $show[] = '$("#finacn").css("display","none")';
-    }
-    if(strpos($permission,'riskCg')===false){
-        $show[] = '$("#riskCg").css("display","none")';
-    }
-    if(strpos($permission,'Table')===false){
-        $show[] = '$("#Table").css("display","none")';
-    }
-    if(strpos($permission,'download')===false){
-        $show[] = '$("#download").css("display","none")';
-    }
-    if(strpos($permission,'pic')===false){
-        $show[] = '$("#pic").css("display","none")';
-    }
     if(strpos($permission,'finance')===false){
-        $show[] = '$("#finance").css("display","none")';
+        $show[] = '$(".finance").css("display","none")';
     }
-
+    if(strpos($permission,'risk')===false){
+        $show[] = '$(".risk").css("display","none")';
+    }
+    if(strpos($permission,'admin')===false){
+        $show[] = '$(".admin").css("display","none")';
+    }
 ?>
 <html>
 <head>
@@ -62,7 +49,7 @@ $show = array();
                 <!-- Sidebar Menu -->
                 <ul class="nav sidebar-menu">
                     <!--Dashboard-->
-                    <li id='Table'>
+                    <li class = 'risk'>
                         <a href="#" class="menu-dropdown">
                             <i class="menu-icon fa fa-user"></i>
                             <span class="menu-text">数据表</span>
@@ -142,17 +129,9 @@ $show = array();
                                     <i class="menu-expand"></i>
                                 </a>
                             </li>
-                            <li>
-                                <a href="data_daily_pass_ratio/ddpr.php" target="frame1">
-                                    <span class="menu-text">
-                                    通过率
-                                    </span>
-                                    <i class="menu-expand"></i>
-                                </a>
-                            </li>
                         </ul>                            
                     </li>
-                    <li id = 'riskCg'>
+                    <li class = 'risk'>
                         <a href="#" class="menu-dropdown">
                             <i class="menu-icon fa fa-user"></i>
                             <span class="menu-text">风控数据(存管)</span>
@@ -191,9 +170,17 @@ $show = array();
                                     <i class="menu-expand"></i>
                                 </a>
                             </li>
+                            <li>
+                                <a href="data_daily_pass_ratio/ddpr.php" target="frame1">
+                                    <span class="menu-text">
+                                    通过率
+                                    </span>
+                                    <i class="menu-expand"></i>
+                                </a>
+                            </li>
                         </ul>                            
                     </li>
-                    <li id = 'finance'>
+                    <li class = 'finance'>
                         <a href="#" class="menu-dropdown">
                             <i class="menu-icon fa fa-user"></i>
                             <span class="menu-text">财务</span>
@@ -250,7 +237,7 @@ $show = array();
                             </li>
                         </ul>                            
                     </li>
-                    <li id = 'financeCg'>
+                    <li class = 'finance'>
                         <a href="#" class="menu-dropdown">
                             <i class="menu-icon fa fa-user"></i>
                             <span class="menu-text">财务(存管)</span>
@@ -315,7 +302,7 @@ $show = array();
                             </li>
                         </ul>                            
                     </li>
-                    <li id = 'download'>
+                    <li class = 'admin'>
                         <a href="#" class="menu-dropdown">
                             <i class="glyphicon glyphicon-download-alt" style="width:30px;text-align:center"></i>
                             <span class="menu-text">下载列表</span>
@@ -332,7 +319,7 @@ $show = array();
                             </li>
                         </ul>                            
                     </li>
-                    <li id = 'pic'>
+                    <li class = 'admin'>
                         <a href="#" class="menu-dropdown">
                             <i class="glyphicon glyphicon-download-alt" style="width:30px;text-align:center"></i>
                             <span class="menu-text">图表</span>
@@ -349,7 +336,7 @@ $show = array();
                             </li>
                         </ul>                            
                     </li>
-                    <li id = 'riskCg'>
+                    <li class = 'risk'>
                         <a href="#" class="menu-dropdown">
                             <i class="menu-icon fa fa-user"></i>
                             <span class="menu-text">逾期分析(存管)</span>
@@ -390,7 +377,7 @@ $show = array();
                             </li>
                         </ul>                            
                     </li>
-                    <li id = 'riskCg'>
+                    <li class = 'risk'>
                         <a href="#" class="menu-dropdown">
                             <i class="menu-icon fa fa-user"></i>
                             <span class="menu-text">逾期分析</span>
@@ -431,7 +418,7 @@ $show = array();
                             </li>
                         </ul>                            
                     </li>
-                    <li id = 'pic'>
+                    <li class = 'finance'>
                         <a href="#" class="menu-dropdown">
                             <i class="glyphicon glyphicon-download-alt" style="width:30px;text-align:center"></i>
                             <span class="menu-text">催收栏目</span>
