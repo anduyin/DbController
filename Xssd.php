@@ -300,6 +300,14 @@ $show = array();
                                     <i class="menu-expand"></i>
                                 </a>
                             </li>
+                            <li>
+                                <a href="ph_loan_salary/loanSalary_ph.php" target="frame1">
+                                    <span class="menu-text">
+                                    普惠-工薪贷
+                                    </span>
+                                    <i class="menu-expand"></i>
+                                </a>
+                            </li>
                         </ul>                            
                     </li>
                     <li class = 'admin'>
