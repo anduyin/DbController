@@ -40,7 +40,8 @@ function arrayMain($data){
         @$array[0] += $v['num'];
         @$array[1] += $v['loan'];
         @$array[2] += $v['service_fee'];
-        $array[3] = $v['status_time'];
+        $array[3] = $v['Loan_type'];
+        $array[4] = $v['status_time'];
     }
     return $array;
 }

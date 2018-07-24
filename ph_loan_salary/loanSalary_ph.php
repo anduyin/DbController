@@ -8,7 +8,7 @@
 	$result = mysqli_query($link, $query);
 	$arr = $result->fetch_all(MYSQLI_ASSOC);
 	mysqli_close($link);
-	$head = array('笔数(笔)','放款(元)','服务费(元)','日期');
+	$head = array('笔数(笔)','放款(元)','服务费(元)','类型','日期');
 	$headjson = json_encode($head);
 	$json = json_encode($arr);
 ?>
