@@ -197,7 +197,6 @@ var hot = new Handsontable(container, {
 			type:"post",
 			data:info,
 			success:function(re){
-				console.log(re);
 				hot.clear();
 				var searchTotal = JSON.parse(re);
 				hot.updateSettings({

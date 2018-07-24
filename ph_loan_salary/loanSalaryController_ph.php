@@ -14,10 +14,10 @@ function searchTotal($link){
     $time = '';
     if($time1==$time2){
         $time = $time2;
-        $query = "SELECT * FROM `ph_loan_salary` where status_time = \"$time1\"";
+        $query = "SELECT * FROM `ph_loan_salary` where loan_time = \"$time1\"";
     }else{
         $time = $time1."~".$time2;
-        $query = "SELECT * FROM `ph_loan_salary` where status_time >= \"$time1\" and status_time <= \"$time2\"";
+        $query = "SELECT * FROM `ph_loan_salary` where loan_time >= \"$time1\" and loan_time <= \"$time2\"";
     }
     $result = mysqli_query($link, $query);
     $arr = $result->fetch_all(MYSQLI_ASSOC);
@@ -29,7 +29,8 @@ function searchTotal($link){
         @$total[1] += $v['loan'];
         @$total[2] += $v['service_fee'];
     }
-    $total[3] = $time;
+    $total[3] = '';
+    $total[4] = $time;
     $array[] = $total;
     echo  json_encode($array);
 }
@@ -41,7 +42,7 @@ function arrayMain($data){
         @$array[1] += $v['loan'];
         @$array[2] += $v['service_fee'];
         $array[3] = $v['Loan_type'];
-        $array[4] = $v['status_time'];
+        $array[4] = $v['loan_time'];
     }
     return $array;
 }
