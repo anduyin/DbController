@@ -103,7 +103,7 @@
 		}
 	</style>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>普惠-工薪贷</title>
+	<title>放款与服务费</title>
 	<script src="../jquery-3.2.1.min.js"></script>
 	<script src="../handsontable-pro-master/dist/handsontable.full.min.js"></script>
 	<link href="../handsontable-pro-master/dist/handsontable.full.min.css" rel="stylesheet" media="screen">
@@ -113,7 +113,7 @@
 	
 	<div style="text-align: center" class="top">
 		<span style="font-size:18px;color:#262626;float:left;margin-left:25px;">财务(存管)></span>
-        <span style="font-size:18px;color:#F44B2A;float:left;">普惠-工薪贷</span>
+        <span style="font-size:18px;color:#F44B2A;float:left;">放款与服务费</span>
     </div>
 		<div class="search">
 			<input type="date" value="" id = "time1">
@@ -177,7 +177,7 @@ var hot = new Handsontable(container, {
 				headInfo[h] = [0,h,head[h]];
 			}
 		hot.setDataAtCell(headInfo);
-		exportPlugin.downloadFile('csv', {filename: '普惠-工薪贷'});
+		exportPlugin.downloadFile('csv', {filename: '放款与服务费'});
 	})
 
 	//查询(总额)
