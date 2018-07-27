@@ -6,25 +6,14 @@
  *  */
 
 require_once '../Common.php';
-$time1 = $_POST[0];
-$time2  = $_POST[1];
-if($time1==$time2){
-	$query = "select * from financial_budget_statistics where date = \"$time1\"";
-}else{
-	$query = "select * from financial_budget_statistics where date >= \"$time1\" and date <= \"$time2\"";
-}
-
-
+$time = $_POST[0];
+$query = "select * from financial_budget_statistics where update_date = \"$time\"";
 $result = mysqli_query($link, $query);
-
 $arr = $result->fetch_all(MYSQLI_ASSOC);
-
 mysqli_close($link);
 for($i=0;$i<count($arr);$i++){
-	
 	$arr[$i]['date'] = date("Y-m-d",strtotime($arr[$i]['date']));
 	$arr[$i]['manage_money'] = number_format((($arr[$i]['manage_money'])/10000),2,'.','');
-	 
 	if($arr[$i]['true_manage_money']===Null){
 		$arr[$i]['true_manage_money'] =	'';
 	}else{

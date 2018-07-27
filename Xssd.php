@@ -342,7 +342,15 @@ $show = array();
                                     <i class="menu-expand"></i>
                                 </a>
                             </li>
-                        </ul>                            
+                            <li>
+                                <a href="fee_rate_calculation/feeRateCalculation.php" target="frame1">
+                                    <span class="menu-text">
+                                        费率测算
+                                    </span>
+                                    <i class="menu-expand"></i>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                     <li class = 'risk'>
                         <a href="#" class="menu-dropdown">

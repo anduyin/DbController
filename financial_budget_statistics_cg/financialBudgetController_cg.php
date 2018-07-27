@@ -6,19 +6,10 @@
  *  */
 
 require_once '../Common.php';
-$time1 = $_POST[0];
-$time2  = $_POST[1];
-if($time1==$time2){
-	$query = "select * from financial_budget_statistics_cg where date = \"$time1\"";
-}else{
-	$query = "select * from financial_budget_statistics_cg where date >= \"$time1\" and date <= \"$time2\"";
-}
-
-
+$time = $_POST[0];
+$query = "select * from financial_budget_statistics_cg where update_date = \"$time\"";
 $result = mysqli_query($link, $query);
-
 $arr = $result->fetch_all(MYSQLI_ASSOC);
-
 mysqli_close($link);
 for($i=0;$i<count($arr);$i++){
 	

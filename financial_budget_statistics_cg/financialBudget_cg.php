@@ -3,14 +3,18 @@
  * 
  *  
  *  */
-	
-	require_once '../Common.php';
-	$query2 = "select * from financial_budget_statistics_cg";
-	$result = mysqli_query($link, $query2);
-	$arr2 = $result->fetch_all(MYSQLI_ASSOC);//默认第一次打开的查询数据
-	mysqli_close($link);
-	$now = date("Y-m-d",time());
-	$end = date("Y-m-d",time()+30*24*60*60);	
+require_once '../Common.php';
+//获取最大更新时间
+$sql = "select update_date from financial_budget_statistics_cg  GROUP by update_date order by update_date";
+$re = mysqli_query($link,$sql);
+$arr = $re->fetch_all(MYSQLI_ASSOC);//更新时间数组
+$maxDate = $arr[0]['update_date'];
+$query2 = "select * from financial_budget_statistics_cg where update_date =\"$maxDate\"";
+$result = mysqli_query($link, $query2);
+$arr2 = $result->fetch_all(MYSQLI_ASSOC);//默认第一次打开的查询数据
+mysqli_close($link);
+$now = date("Y-m-d",time());
+$end = date("Y-m-d",time()+30*24*60*60);
 ?>
 
 <html style="position: absolute; left: 0; top: 0;">
@@ -106,9 +110,11 @@
 			<span style="font-size:18px;color:#262626;float:left;margin-left:25px;">财务(存管)></span>
             <span style="font-size:18px;color:#F44B2A;float:left;">收支预计(存管)</span>	
 			<!-- 时间选项 -->
-			<input type="date" value="" id = "time1">
-			&nbsp;&nbsp;至&nbsp;&nbsp;
-			<input type="date" value="" id = "time2">
+            <select>
+                <?php foreach($arr as $a){?>
+                    <option id='time' value="<?php echo $a['update_date'];?>"><?php echo $a['update_date'];?></option>
+                <?php }?>
+            </select>
 			<input type="button" value="查询" id="button" class="btn">
 			<input type='submit' value="下载" class="btn">
 			<input type='hidden' name ="tmp" value='Z.xlsx'>
@@ -179,14 +185,8 @@
 <script>
 	function getWeek(){
 		var data={};
-		var time1 = $("#time1").val();
-		var time2 = $("#time2").val();
-		data[0] = time1;
-		data[1] = time2;		
-		if((time1=="")||(time2=="")){
-				alert("时间范围选择错误");
-				return;
-			}
+        var time = $("#time").val();
+        data[0] = time;
 		$.ajax({
 			url:"financialBudgetController_cg.php",
 			type:"post",
