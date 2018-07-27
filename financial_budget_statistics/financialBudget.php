@@ -111,7 +111,7 @@
 			<span style="font-size:18px;color:#262626;float:left;margin-left:25px;">财务></span>
             <span style="font-size:18px;color:#F44B2A;float:left;">收支预计</span>	
 			<!-- 时间选项 -->
-			<select>
+			<select name = 'time'>
                 <?php foreach($arr as $a){?>
                     <option id='time' value="<?php echo $a['update_date'];?>"><?php echo $a['update_date'];?></option>
                 <?php }?>

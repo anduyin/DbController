@@ -131,8 +131,8 @@ if($name == "M"){
 	}
 }elseif($name == "C"){
 	$Xlsname = "收支预计";
-	
-	$query = "select id,date as '日期',manage_money as '应收借款管理费(万元)',true_manage_money as '实收借款管理费(万元)',advance_money as '应垫本息总额(万元)',true_advance_money as '实垫本息总额(万元)',not_advance_money as '无需垫付总额(万元)',recovered_advances_money as '已追回垫付金额(万元)',update_date as '更新日期' from financial_budget_statistics";
+	$time = $_POST['time'];
+	$query = "select id,date as '日期',manage_money as '应收借款管理费(万元)',true_manage_money as '实收借款管理费(万元)',advance_money as '应垫本息总额(万元)',true_advance_money as '实垫本息总额(万元)',not_advance_money as '无需垫付总额(万元)',recovered_advances_money as '已追回垫付金额(万元)',update_date as '更新日期' from financial_budget_statistics where update_date = \"$time\"";
 	
 	$result = mysqli_query($link, $query);
 
@@ -173,8 +173,8 @@ if($name == "M"){
 	}
 }elseif($name == "Z"){
 	$Xlsname = "收支预计(存管)";
-	
-	$query = "select id,date as '日期',manage_money as '应收借款管理费(万元)',true_manage_money as '实收借款管理费(万元)',advance_money as '应垫本息总额(万元)',true_advance_money as '实垫本息总额(万元)',not_advance_money as '无需垫付总额(万元)',recovered_advances_money as '已追回垫付金额(万元)',update_date as '更新日期' from financial_budget_statistics_cg";
+	$time = $_POST['time'];
+	$query = "select id,date as '日期',manage_money as '应收借款管理费(万元)',true_manage_money as '实收借款管理费(万元)',advance_money as '应垫本息总额(万元)',true_advance_money as '实垫本息总额(万元)',not_advance_money as '无需垫付总额(万元)',recovered_advances_money as '已追回垫付金额(万元)',update_date as '更新日期' from financial_budget_statistics_cg where update_date = \"$time\"";
 	
 	$result = mysqli_query($link, $query);
 

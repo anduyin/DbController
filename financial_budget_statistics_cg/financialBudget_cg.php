@@ -110,7 +110,7 @@ $end = date("Y-m-d",time()+30*24*60*60);
 			<span style="font-size:18px;color:#262626;float:left;margin-left:25px;">财务(存管)></span>
             <span style="font-size:18px;color:#F44B2A;float:left;">收支预计(存管)</span>	
 			<!-- 时间选项 -->
-            <select>
+            <select name = 'time'>
                 <?php foreach($arr as $a){?>
                     <option id='time' value="<?php echo $a['update_date'];?>"><?php echo $a['update_date'];?></option>
                 <?php }?>
