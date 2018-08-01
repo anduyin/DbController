@@ -6,7 +6,7 @@
 	
 	require_once '../Common.php';
 	//获取最大更新时间
-    $sql = "select update_date from financial_budget_statistics  GROUP by update_date order by update_date";
+    $sql = "select update_date from financial_budget_statistics  GROUP by update_date order by update_date DESC ";
     $re = mysqli_query($link,$sql);
     $arr = $re->fetch_all(MYSQLI_ASSOC);//更新时间数组
     $maxDate = $arr[0]['update_date'];
@@ -111,9 +111,9 @@
 			<span style="font-size:18px;color:#262626;float:left;margin-left:25px;">财务></span>
             <span style="font-size:18px;color:#F44B2A;float:left;">收支预计</span>	
 			<!-- 时间选项 -->
-			<select name = 'time'>
+			<select name = 'time' id="time">
                 <?php foreach($arr as $a){?>
-                    <option id='time' value="<?php echo $a['update_date'];?>"><?php echo $a['update_date'];?></option>
+                    <option value="<?php echo $a['update_date'];?>"><?php echo $a['update_date'];?></option>
                 <?php }?>
             </select>
 			<input type="button" value="查询" id="button" class="btn">
