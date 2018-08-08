@@ -118,6 +118,8 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>存管接口调用服务费</title>
 	<script src="../jquery-3.2.1.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	<script src="../handsontable-pro-master/dist/handsontable.full.min.js"></script>
 	<link href="../handsontable-pro-master/dist/handsontable.full.min.css" rel="stylesheet" media="screen">
 
