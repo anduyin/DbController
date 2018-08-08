@@ -39,7 +39,7 @@ function searchTotal($link){
     if(empty($where)){
         $whereSql = '';
     }
-    $query = "select * from `repayment_type_statistics_tg`".$whereSql.$limit;
+    $query = "select date,type,num,money from `repayment_type_statistics_tg`".$whereSql.$limit;
     $result = mysqli_query($link, $query);
     $arr = $result->fetch_all(MYSQLI_ASSOC);
     //求总页数
