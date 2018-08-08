@@ -11,7 +11,6 @@
     $time = $today->modify("-3 day")->format("Y-m-d");
     $day = date('Y-m-d',time());
 	$query2 = "select * from daily_collection_amount_statistics_cg where date>='$time' and date<='$endDay' and update_time = '$day'";
-	echo $query2;exit;
 	$result = mysqli_query($link, $query2);
 	$arr2 = $result->fetch_all(MYSQLI_ASSOC);//默认第一次打开的查询数据
 	mysqli_close($link);
