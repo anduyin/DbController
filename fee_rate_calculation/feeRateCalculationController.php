@@ -9,31 +9,53 @@ require_once '../Common.php';
 
 //查询
 function searchTotal($link){
-    $name = $_POST['name'] != -1?$_POST['name']:'';
-    $bid_status = $_POST['bid_status'] != -1?$_POST['bid_status']:'';
-    $is_36 = $_POST['is_36'] != -1?$_POST['is_36']:'';
-    $loan_date1 = $_POST['loan_date1'] != -1?$_POST['loan_date1']:'';
-    $loan_date2 = $_POST['loan_date2'] != -1?$_POST['loan_date2']:'';
-    $repay_date1 = $_POST['repay_date1'] != -1?$_POST['repay_date1']:'';
-    $repay_date2 = $_POST['repay_date2'] != -1?$_POST['repay_date2']:'';
+    $where['name ='] = $_POST['name'] != -1?$_POST['name']:'';
+    $where['bid_status ='] = $_POST['bid_status'] != -1?$_POST['bid_status']:'';
+    $where['is_36 ='] = $_POST['is_36'] != -1?$_POST['is_36']:'';
+    $where['loan_date >='] = $_POST['loan_date1'] != -1?$_POST['loan_date1']:'';
+    $where['loan_date <='] = $_POST['loan_date2'] != -1?$_POST['loan_date2']:'';
+    $where['repay_date >='] = $_POST['repay_date1'] != -1?$_POST['repay_date1']:'';
+    $where['repay_date <='] = $_POST['repay_date2'] != -1?$_POST['repay_date2']:'';
     $page = $_POST['page'];
     $pageSize = $_POST['pageSize'];
     $index= ($page-1)*$pageSize;
-    $limit = ' limit('.$index.','.$pageSize.')';
-    $where = '';
-    $query = "select * from `fee_rate_calculation`".$where.$limit;
-    if($name||$bid_status||$is_36||$loan_date1||$loan_date2||$repay_date1||$repay_date2){
-        $where = ' where ';
-
+    $limit = ' limit '.$index.','.$pageSize;
+    $whereSql = '';
+    if(!empty($where)&&is_array($where)){
+        foreach($where as $k=>$v){
+            if($v == ''){
+                unset($where[$k]);
+            }
+        }
+        $num = count($where);
+        foreach($where as $key=>$value){
+            if($num == 1){
+                $whereSql = $key.'\''.$value.'\'';
+            }else{
+                $whereSql .= $key.'\''.$value.'\''.' and ';
+            }
+        }
+        if($num!=1){
+            $whereSql = substr_replace($whereSql,' ',-4,4);
+        }
+        $whereSql = 'where '.$whereSql;
     }
-
-
-
+    if(empty($where)){
+        $whereSql = '';
+    }
+    $query = "select * from `fee_rate_calculation`".$whereSql.$limit;
     $result = mysqli_query($link, $query);
     $arr = $result->fetch_all(MYSQLI_ASSOC);
+    //求总页数
+    $totalSql = "select count(*) from `fee_rate_calculation`".$whereSql;
+    $totalRe = mysqli_query($link,$totalSql);
+    $num = $totalRe->fetch_row();
+    $max = ceil($num[0]/$pageSize);
     mysqli_close($link);
-
-    echo  json_encode($array);
+    $json['page'] = $page;
+    $json['data'] = $arr;
+    $json['max'] = $max;
+    echo  json_encode($json);
 }
 
 function arrayMain($data){

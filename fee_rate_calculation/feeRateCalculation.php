@@ -3,7 +3,10 @@
  *  */
 	require_once '../Common.php';
 	require_once 'feeRateCalculationController.php';
-	$query = "SELECT * FROM `fee_rate_calculation` order by deal_id limit 0,30";//首次打开,显示30条
+	$page = 1;
+	$pageSize = 30;
+	$index = ($page-1)*$pageSize;
+	$query = "SELECT * FROM `fee_rate_calculation` limit ".$index.','.$pageSize;//首次打开,显示30条
 	$result = mysqli_query($link, $query);
 	$arr = $result->fetch_all(MYSQLI_ASSOC);
 	foreach($arr as $key=>$value){
@@ -21,6 +24,11 @@
     $is_36Sql = "SELECT `is_36` FROM `fee_rate_calculation` GROUP BY `is_36`";
     $is_36Re = mysqli_query($link, $is_36Sql);
     $is_36 = $is_36Re->fetch_all(MYSQLI_ASSOC);
+    //查询总数
+    $totalSql = 'select count(*) from `fee_rate_calculation`';
+    $totalRe = mysqli_query($link,$totalSql);
+    $num = $totalRe->fetch_row();
+    $max = ceil($num[0]/$pageSize);
 	mysqli_close($link);
 	$head = array('借款人','借款ID','手机号','贷款类型','放款状态','放款日','结清日','本金','管理费','利息','服务费','征信查询费','中介服务费','担保费','总加速服务费','借款人借款笔数','平均加速服务费','费率','是否超36','应退还金额');
 	$headjson = json_encode($head);
@@ -115,16 +123,22 @@
 			text-align: center;
 			margin-bottom: 10px;
 		}
+        #pageFee {
+            width:50px;
+        }
 	</style>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>费率测算</title>
 	<script src="../jquery-3.2.1.min.js"></script>
 	<script src="../handsontable-pro-master/dist/handsontable.full.min.js"></script>
-	<link href="../handsontable-pro-master/dist/handsontable.full.min.css" rel="stylesheet" media="screen">
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link href="../handsontable-pro-master/dist/handsontable.full.min.css" rel="stylesheet" media="screen">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
 
 </head>
 <body style="background-color:#fff;">
-	
+
 	<div style="text-align: center" class="top">
 		<span style="font-size:18px;color:#262626;float:left;margin-left:25px;">图表 > </span>
         <span style="font-size:18px;color:#F44B2A;float:left;">费率测算</span>
@@ -163,7 +177,7 @@
             <!--结清日 End-->
             <!-- 是否超36 -->
             是否超36:
-            <select id = "is_36" style="width:50px">
+            <select id = "is_36" style="width:60px">
                 <option value = "-1">全部</option>
                 <?php foreach($is_36 as $i){?>
                     <option value = "<?php echo $i['is_36']?>"><?php echo $i['is_36']=='0'?"否":"是"?></option>
@@ -175,73 +189,121 @@
 		</div>
 	
 	<div id="example" class="moneyTable"></div>
-    <div id = page></div>
+    <div id = page>
+        <nav aria-label="...">
+            <ul class="pager">
+                <li><a href="#" id = "proPage">上一页</a></li>
+                <input type="text" value="<?php echo $page ?>" id="pageFee" name="page">/<span id="max"><?php echo $max; ?></span>
+                <button id="jump" class="btn btn-default">跳转</button>
+                <li><a href="#" id="nextPage">下一页</a></li>
+            </ul>
+        </nav>
+    </div>
 	<div id='total'></div>
-		
-		
 </body>
 <script type="text/javascript">
-var data = <?php echo $json;?>;
-var container = document.getElementById('example');
-var hot = new Handsontable(container, {
-    data: data,
-    rowHeaders: true,
-    colHeaders: <?php echo $headjson?>,
-    colWidths: 230,
-    filters: true,
-    dropdownMenu: true,
-    manualColumnFreeze: true,
-    forceNumeric: true,
-    manualColumnResize: true,
-    sortIndicator: true,
-    columnSorting: true,
-    fixedRowsBottom: 2
-});
-	var exportPlugin = hot.getPlugin('exportFile');
-	$("#download").click(function(){
-		hot.alter('insert_row', 0);
-		var head = <?php echo $headjson?>;
-		var headInfo = [];
-			for(var h=0;h<head.length;h++){
-				headInfo[h] = [0,h,head[h]];
-			}
-		hot.setDataAtCell(headInfo);
-		exportPlugin.downloadFile('csv', {filename: '费率测算'});
-	})
+    $(function(){
+        var data = <?php echo $json;?>;
+        var container = document.getElementById('example');
+        var hot = new Handsontable(container, {
+            data: data,
+            rowHeaders: true,
+            colHeaders: <?php echo $headjson?>,
+            colWidths: 230,
+            filters: true,
+            dropdownMenu: true,
+            manualColumnFreeze: true,
+            forceNumeric: true,
+            manualColumnResize: true,
+            sortIndicator: true,
+            columnSorting: true,
+            fixedRowsBottom: 2
+        });
+        var exportPlugin = hot.getPlugin('exportFile');
+        $("#download").click(function(){
+            hot.alter('insert_row', 0);
+            var head = <?php echo $headjson?>;
+            var headInfo = [];
+            for(var h=0;h<head.length;h++){
+                headInfo[h] = [0,h,head[h]];
+            }
+            hot.setDataAtCell(headInfo);
+            exportPlugin.downloadFile('csv', {filename: '费率测算'});
+        });
 
-	//查询
-	$("#searchTotal").click(function(){
-		var info={};
-		var name = $("#name").val();
-		var bid_status = $("#bid_status").val();
-		var loan_date1 = $("#loan_date1").val();
-		var loan_date2 = $("#loan_date2").val();
-		var repay_date1 = $("#repay_date1").val();
-		var repay_date2 = $("#repay_date2").val();
-		var is_36 = $("#is_36").val();
-		info['name'] = name;
-		info['bid_status'] = bid_status;
-		info['loan_date1'] = loan_date1;
-        info['loan_date2'] = loan_date2;
-        info['repay_date1'] = repay_date1;
-        info['repay_date2'] = repay_date2;
-        info['is_36'] = is_36;
-        info['code'] = 'searchTotal';
-		$.ajax({
-			url:"feeRateCalculationController.php",
-			type:"post",
-			data:info,
-			success:function(re){
-				hot.clear();
-				var searchTotal = JSON.parse(re);
-				hot.updateSettings({
-   					data: searchTotal
-				});
-			}
-		});
-	})
-
-	
-</script>
+        //查询
+        selectTotal = function (page,pageSize){
+            var info={};
+            var name = $("#name").val();
+            var bid_status = $("#bid_status").val();
+            var loan_date1 = $("#loan_date1").val();
+            var loan_date2 = $("#loan_date2").val();
+            var repay_date1 = $("#repay_date1").val();
+            var repay_date2 = $("#repay_date2").val();
+            var is_36 = $("#is_36").val();
+            var page = page || 1;
+            var pageSize = pageSize || 30;
+            info['name'] = name;
+            info['bid_status'] = bid_status;
+            info['loan_date1'] = loan_date1;
+            info['loan_date2'] = loan_date2;
+            info['repay_date1'] = repay_date1;
+            info['repay_date2'] = repay_date2;
+            info['is_36'] = is_36;
+            info['code'] = 'searchTotal';
+            info['page'] = page;
+            info['pageSize'] = pageSize;
+            console.log(info);
+            $.ajax({
+                url:"feeRateCalculationController.php",
+                type:"post",
+                data:info,
+                success:function(re){
+                    var result = JSON.parse(re);
+                    var nowPage = result.page;
+                    var max = result.max;
+                    $("#pageFee").val(nowPage);
+                    $("#max").text(max);
+                    console.log(result);
+                    hot.updateSettings({
+                        data: result.data
+                    });
+                }
+            });
+        }
+        $("#searchTotal").click(function(){
+            selectTotal();
+        })
+        $("#nextPage").click(function(){
+            var nextPage = Number($("#pageFee").val()) + 1;
+            var maxN = $("#max").text();
+            if(nextPage>maxN){
+                nextPage = maxN;
+            }
+            selectTotal(nextPage);
+        });
+        $("#proPage").click(function(){
+            var proPage = $("#pageFee").val() - 1;
+            if(proPage<=0){
+                proPage = 1;
+            }
+            selectTotal(proPage);
+        })
+        $("#jump").click(function(){
+            var jumpPage = $("#pageFee").val();
+            var reg=/^[0-9]+.?[0-9]*$/
+            var maxN = $("#max").text();
+            if(!reg.test(jumpPage)){
+                alert('错误,输入的页数有误');
+            }
+            if(jumpPage == 0){
+                jumpPage = 1;
+            }
+            if(jumpPage>maxN){
+                jumpPage = maxN;
+            }
+            selectTotal(jumpPage);
+        })
+    })
 </script>
 </html>
