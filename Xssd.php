@@ -129,6 +129,14 @@ $show = array();
                                     <i class="menu-expand"></i>
                                 </a>
                             </li>
+                            <li>
+                                <a href="repayment_type_statistics_tg/repayment_type_statistics_tg.php" target="frame1">
+                                    <span class="menu-text">
+                                    还款类型统计(托管)
+                                    </span>
+                                    <i class="menu-expand"></i>
+                                </a>
+                            </li>
                         </ul>                            
                     </li>
                     <li class = 'risk'>
