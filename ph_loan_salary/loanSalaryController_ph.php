@@ -14,10 +14,10 @@ function searchTotal($link){
     $time = '';
     if($time1==$time2){
         $time = $time2;
-        $query = "SELECT * FROM `ph_loan_salary` where loan_time = \"$time1\" ORDER BY id DESC ";
+        $query = "SELECT * FROM `ph_loan_salary` where loan_time = \"$time1\" ORDER BY loan_time DESC ";
     }else{
         $time = $time1."~".$time2;
-        $query = "SELECT * FROM `ph_loan_salary` where loan_time >= \"$time1\" and loan_time <= \"$time2\" ORDER BY id DESC";
+        $query = "SELECT * FROM `ph_loan_salary` where loan_time >= \"$time1\" and loan_time <= \"$time2\" ORDER BY loan_time DESC";
     }
     $result = mysqli_query($link, $query);
     $arr = $result->fetch_all(MYSQLI_ASSOC);
