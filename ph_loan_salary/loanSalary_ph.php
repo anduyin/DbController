@@ -4,7 +4,7 @@
 	
 	require_once '../Common.php';
 	require_once 'loanSalaryController_ph.php';
-	$query = "SELECT * FROM `ph_loan_salary`";
+	$query = "SELECT * FROM `ph_loan_salary` ORDER BY id DESC ";
 	$result = mysqli_query($link, $query);
 	$arr = $result->fetch_all(MYSQLI_ASSOC);
 	mysqli_close($link);
