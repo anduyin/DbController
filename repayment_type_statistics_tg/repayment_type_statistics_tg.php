@@ -8,7 +8,6 @@
 	$now = date('Y-m-d',time());
 	$start = date('Y-m-d',(time()-7*24*60*60));
 	$query = "SELECT date,type,num,money FROM `repayment_type_statistics_tg` where date >=".'\''.$start.'\''." and date <=".'\''.$now.'\''." and type = '用户还款' order by date desc limit " .$index.','.$pageSize;//首次打开,显示30条
-	echo $query;
     $result = mysqli_query($link, $query);
 	$arr = $result->fetch_all(MYSQLI_ASSOC);
     //全部还款类型
