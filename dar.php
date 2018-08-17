@@ -91,20 +91,20 @@ mysqli_close($link);
 	</div>
 	<table  class="table table-hover table-bordered" style="text-align: center;margin:0;">
 	<tr>
-        <th width="11%" style="text-align: center">应还日期</th>
-        <th width="11%" class="active">应还总额(万元)</th>
-        <th width="11%" class="active">实还总额(万元)</th>
-        <th width="11%" class="active">提前或准时还总额(万元)</th>
-        <th width="11%" class="active">逾期已还总额(万元)</th>
-        <th width="11%" class="active">未还总额(万元)</th>
-        <th width="11%" class="active">隔天垫付总额(万元)</th>
-        <th width="11%" class="active">30天垫付总额(万元)</th>
-        <th width="11%" class="active">60天垫付总额(万元)</th>
-        <th width="11%" class="active">90天垫付总额(万元)</th>
-        <th width="11%" class="active">隔天垫付追回总额(万元)</th>
-        <th width="11%" class="active">30天垫付追回总额(万元)</th>
-        <th width="11%" class="active">60天垫付追回总额(万元)</th>
-        <th width="11%" class="active">90天垫付追回总额(万元)</th>
+        <th width="7%" style="text-align: center">应还日期</th>
+        <th width="7%" class="active">应还总额(万元)</th>
+        <th width="7%" class="active">实还总额(万元)</th>
+        <th width="7%" class="active">提前或准时还总额(万元)</th>
+        <th width="7%" class="active">逾期已还总额(万元)</th>
+        <th width="7%" class="active">未还总额(万元)</th>
+        <th width="7%" class="active">隔天垫付总额(万元)</th>
+        <th width="7%" class="active">30天垫付总额(万元)</th>
+        <th width="7%" class="active">60天垫付总额(万元)</th>
+        <th width="7%" class="active">90天垫付总额(万元)</th>
+        <th width="7%" class="active">隔天垫付追回总额(万元)</th>
+        <th width="7%" class="active">30天垫付追回总额(万元)</th>
+        <th width="7%" class="active">60天垫付追回总额(万元)</th>
+        <th width="7%" class="active">90天垫付追回总额(万元)</th>
 		</tr>
 	</table>
 	<div id='b' style="text-align:center;">
@@ -112,20 +112,20 @@ mysqli_close($link);
 	<!-- 第一次表的默认内容  -->
 	<?php foreach($arr1 as $k => $v){?>
 		<tr>
-			<td width="11%"><?php echo $v['repay_date']?></td>
-			<td width="11%"  class="active"><?php echo number_format((($v['total_amount'])/10000),2,'.','')?></td>
-			<td width="11%" class="active"><?php echo number_format((($v['ture_total_amount'])/10000),2,'.','')?></td>
-			<td width="11%" class="active"><?php echo number_format((($v['Advance_money'])/10000),2,'.','')?></td>
-			<td width="11%" class="active"><?php echo number_format((($v['overdue_ture_repay_money'])/10000),2,'.','')?></td>
-            <td width="11%" class="active"><?php echo number_format((($v['not_repay_money'])/10000),2,'.','')?></td>
-			<td width="11%" class="active"><?php echo number_format((($v['advance_payment_1'])/10000),2,'.','')?></td>
-			<td width="11%" class="active"><?php echo number_format((($v['advance_payment_30'])/10000),2,'.','')?></td>
-			<td width="11%" class="active"><?php echo number_format((($v['advance_payment_60'])/10000),2,'.','')?></td>
-			<td width="11%" class="active"><?php echo number_format((($v['advance_payment_90'])/10000),2,'.','')?></td>
-            <td width="11%" class="active"><?php echo number_format((($v['recover_1'])/10000),2,'.','')?></td>
-            <td width="11%" class="active"><?php echo number_format((($v['recover_30'])/10000),2,'.','')?></td>
-            <td width="11%" class="active"><?php echo number_format((($v['recover_60'])/10000),2,'.','')?></td>
-            <td width="11%" class="active"><?php echo number_format((($v['recover_90'])/10000),2,'.','')?></td>
+			<td width="7%"><?php echo $v['repay_date']?></td>
+			<td width="7%%"  class="active"><?php echo number_format((($v['total_amount'])/10000),2,'.','')?></td>
+			<td width="7%" class="active"><?php echo number_format((($v['ture_total_amount'])/10000),2,'.','')?></td>
+			<td width="7%" class="active"><?php echo number_format((($v['Advance_money'])/10000),2,'.','')?></td>
+			<td width="7%" class="active"><?php echo number_format((($v['overdue_ture_repay_money'])/10000),2,'.','')?></td>
+            <td width="7%" class="active"><?php echo number_format((($v['not_repay_money'])/10000),2,'.','')?></td>
+			<td width="7%" class="active"><?php echo number_format((($v['advance_payment_1'])/10000),2,'.','')?></td>
+			<td width="7%" class="active"><?php echo number_format((($v['advance_payment_30'])/10000),2,'.','')?></td>
+			<td width="7%" class="active"><?php echo number_format((($v['advance_payment_60'])/10000),2,'.','')?></td>
+			<td width="7%" class="active"><?php echo number_format((($v['advance_payment_90'])/10000),2,'.','')?></td>
+            <td width="7%" class="active"><?php echo number_format((($v['recover_1'])/10000),2,'.','')?></td>
+            <td width="7%" class="active"><?php echo number_format((($v['recover_30'])/10000),2,'.','')?></td>
+            <td width="7%" class="active"><?php echo number_format((($v['recover_60'])/10000),2,'.','')?></td>
+            <td width="7%" class="active"><?php echo number_format((($v['recover_90'])/10000),2,'.','')?></td>
 		</tr>
 	<?php } ?>
 	</table>
@@ -161,7 +161,7 @@ function getWeek(date){
                  var recover_90 = arr[i]['recover_90'];
                  var advance_payment_90 = arr[i]['advance_payment_90'];
 				 var repay_date =arr[i]['repay_date'];
-				 str +="<tr><td width='11%'>"+repay_date+"</td><td width='11%' class='active'>"+total_amount+"</td><td width='11%' class='active'>"+ture_total_amount+"</td><td width='11%' class='active'>"+Advance_money+"</td><td width='11%' class='active'>"+overdue_ture_repay_money+"</td><td width='11%' class='active'>"+not_repay_money+"</td><td width='11%' class='active'>"+advance_payment_1+"</td><td width='11%' class='active'>"+advance_payment_30+"</td><td width='11%' class='active'>"+advance_payment_60+"</td><td width='11%' class='active'>"+advance_payment_90+"</td><td width='11%' class='active'>"+recover_1+"</td><td width='11%' class='active'>"+recover_30+"</td><td width='11%' class='active'>"+recover_60+"</td><td width='11%' class='active'>"+recover_90+"</td></tr>";
+				 str +="<tr><td width='7%'>"+repay_date+"</td><td width='7%' class='active'>"+total_amount+"</td><td width='7%' class='active'>"+ture_total_amount+"</td><td width='7%' class='active'>"+Advance_money+"</td><td width='7%' class='active'>"+overdue_ture_repay_money+"</td><td width='7%' class='active'>"+not_repay_money+"</td><td width='7%' class='active'>"+advance_payment_1+"</td><td width='7%' class='active'>"+advance_payment_30+"</td><td width='7%' class='active'>"+advance_payment_60+"</td><td width='7%' class='active'>"+advance_payment_90+"</td><td width='7%' class='active'>"+recover_1+"</td><td width='7%' class='active'>"+recover_30+"</td><td width='7%' class='active'>"+recover_60+"</td><td width='7%' class='active'>"+recover_90+"</td></tr>";
 			 }			
 			 var table = "<table class='table table-hover table-bordered'>"+str+"</table>";
 			 $("#b").empty();			 

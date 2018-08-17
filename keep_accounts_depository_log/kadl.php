@@ -114,6 +114,9 @@
 			text-align: center;
 			margin-bottom: 10px;
 		}
+        img {
+            display: none;
+        }
 	</style>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>存管接口调用服务费</title>
@@ -125,7 +128,7 @@
 
 </head>
 <body style="background-color:#fff;">
-	
+    <div style="text-align: center;width: 300px;"><img src="http://47.97.9.93:1050/pic/money.jpg" /></div>
 	<div style="text-align: center" class="top">
 		<span style="font-size:18px;color:#262626;float:left;margin-left:25px;">财务(存管)></span>
         <span style="font-size:18px;color:#F44B2A;float:left;">存管接口调用服务费</span>
@@ -152,6 +155,7 @@
 			<input type="button" value="查询(分类汇总)" id = "searchGroup" class="btn">
 			<input type="button" value="查询(按天汇总)" id = "searchDay" class="btn">
 			<input type='button' value="下载" class="btn" id="download">
+            <input type="button" id="pic" value="费用单价" class="btn">
 		</div>
 	
 	<div id="example" class="moneyTable"></div>
@@ -331,7 +335,16 @@ var hot = new Handsontable(container, {
 			}
 		});
 	});
-	
-</script>
+	var show = true;
+	$("#pic").click(function () {
+	    if(show == true){
+            show = false;
+            $('img').show();
+        }else{
+	        show = true;
+	        $('img').hide();
+        }
+
+    })
 </script>
 </html>

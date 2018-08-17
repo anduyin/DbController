@@ -8,12 +8,10 @@
 require_once '../Common.php';
 $time1 = $_POST[0];
 $time2  = $_POST[1];
-$today = new DateTime();
-$time = $today->format("Y-m-d");
 if($time1==$time2){
-	$query = "select * from daily_collection_amount_statistics_cg where date = \"$time1\" and update_time = \"$time\"";
+	$query = "select * from daily_collection_amount_statistics_cg where date = \"$time1\"";
 }else{
-	$query = "select * from daily_collection_amount_statistics_cg where date >= \"$time1\" and date <= \"$time2\" and update_time = \"$time\"";
+	$query = "select * from daily_collection_amount_statistics_cg where date >= \"$time1\" and date <= \"$time2\"";
 }
 
 
@@ -36,5 +34,7 @@ for($i=0;$i<count($arr);$i++){
 	}else{
 		$arr[$i]['true_manage_money'] = number_format((($arr[$i]['true_manage_money'])/10000),2,'.','');
 	}
+    $arr[$i]['predict_repay_money'] = number_format((($arr[$i]['predict_repay_money'])/10000),2,'.','');
+    $arr[$i]['predict_manage_money'] = number_format((($arr[$i]['predict_manage_money'])/10000),2,'.','');
 }
 echo  json_encode($arr);

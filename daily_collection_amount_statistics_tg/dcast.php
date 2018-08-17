@@ -1,21 +1,15 @@
 <?php
-/* 收支预计表格图展示文件(存管)
- * 
- *  
- *  */
 	
 	require_once '../Common.php';
     $today = new DateTime();
     $endDay = $today->modify("+7 day")->format("Y-m-d");
     $today = new DateTime();
-    $time = $today->modify("-3 day")->format("Y-m-d");
+    $time = $today->modify("-7 day")->format("Y-m-d");
     $day = date('Y-m-d',time());
-	$query2 = "select * from daily_collection_amount_statistics_tg where date>='$time' and date<='$endDay' and update_time = '$day'";
+	$query2 = "select * from daily_collection_amount_statistics_tg where date>='$time' and date<='$endDay'";
 	$result = mysqli_query($link, $query2);
 	$arr2 = $result->fetch_all(MYSQLI_ASSOC);//默认第一次打开的查询数据
 	mysqli_close($link);
-	$now = date("Y-m-d",time());
-	$end = date("Y-m-d",time()+30*24*60*60);	
 ?>
 
 <html style="position: absolute; left: 0; top: 0;">
@@ -132,6 +126,8 @@
 					<th width="6%" class = 'finacn'>应收借款管理费(万元)</th>
 					<th width="6%" class = 'finacn'>实收本息(万元)</th>
 					<th width="6%" class = 'finacn'>实收借款管理费(万元)</th>
+                    <th width="6%" class = 'finacn'>预计实收本息(万元)</th>
+                    <th width="6%" class = 'finacn'>预计实收借款管理费(万元)</th>
 					<th width="6%" class = 'finacn'>更新日期</th>				
 				</tr>
 			</thead>
@@ -142,20 +138,22 @@
 					<td width="6%" class="active"><?php echo $v['date'];?></td>
 					<td width="6%" class="active"><?php echo number_format((($v['repay_money'])/10000),2,'.','')?></td>
                     <td width="6%" class="active"><?php echo number_format((($v['manage_money'])/10000),2,'.','')?></td>
-					<td width="6%" class="active" <?php if($v['date']>=$now&&$v['date']<=$end){?>style='background-color:#C6EFCE'<?php }?>>
+					<td width="6%" class="active">
 						<?php if($v['true_repay_money']===Null){?>
 							<?php echo '';?>
 						<?php }else{?>
 							<?php echo number_format((($v['true_repay_money'])/10000),2,'.','');?>
 						<?php }?>
 					</td>
-					<td width="6%" class="active" <?php if($v['date']>=$now&&$v['date']<=$end){?>style='background-color:#C6EFCE'<?php }?>>
+					<td width="6%" class="active">
 						<?php if($v['true_manage_money']===Null){?>
 							<?php echo '';?>
 						<?php }else{?>
 							<?php echo number_format((($v['true_manage_money'])/10000),2,'.','');?>
 						<?php }?>
 					</td>
+                    <td width="6%" class="active"><?php echo number_format((($v['predict_repay_money'])/10000),2,'.','');?></td>
+                    <td width="6%" class="active"><?php echo number_format((($v['predict_manage_money'])/10000),2,'.','');?></td>
 					<td width="6%" class="active"><?php echo $v['update_time']; ?></td>
 				</tr>
 					
@@ -195,18 +193,15 @@
 					var true_repay_money = arr[i]['true_repay_money'];
 					var true_manage_money = arr[i]['true_manage_money'];
 					var update_time = arr[i]['update_time'];
-					if(date>='<?php echo $now?>'&&date<='<?php echo $end?>'){						
-						 tmm = "<td width='6%' class='active' style='background-color:#C6EFCE'>"+true_repay_money+"</td>";
-                         tam = "<td width='6%' class='active' style='background-color:#C6EFCE'>"+true_manage_money+"</td>";
-					}else{
-						tmm = "<td width='6%' class='active'>"+true_repay_money+"</td>";
-                        tam = "<td width='6%' class='active'>"+true_manage_money+"</td>";
-					}
+                    var predict_repay_money = arr[i]['predict_repay_money'];
+                    var predict_manage_money = arr[i]['predict_manage_money'];
 					str += "<tr><td width='6%' class='active'>"+date+"</td>";
 					str += "<td width='6%' class='active'>"+repay_money+"</td>";
 					str += "<td width='6%' class='active'>"+manage_money+"</td>";
-					str += tmm;
-					str += tam;
+                    str += "<td width='6%' class='active'>"+true_repay_money+"</td>";
+                    str += "<td width='6%' class='active'>"+true_manage_money+"</td>";
+                    str += "<td width='6%' class='active'>"+predict_repay_money+"</td>";
+                    str += "<td width='6%' class='active'>"+predict_manage_money+"</td>";
 					str += "<td width='6%' class='active'>"+update_time+"</td></tr>";
 				}			
 		

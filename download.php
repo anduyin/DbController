@@ -200,11 +200,11 @@ if($name == "M"){
     $today = new DateTime();
     $time = $today->format("Y-m-d");
     if($time1==$time2&&$time1!=''&&$time2!='') {
-        $query = "select date as '日期',repay_money as '应收本息',manage_money as '应收借款管理费',true_repay_money as '实收本息',true_manage_money as '实收借款管理费',update_time as '更新时间' from daily_collection_amount_statistics_cg where date = \"$time1\" and update_time = \"$time\"";
+        $query = "select date as '日期',repay_money as '应收本息',manage_money as '应收借款管理费',true_repay_money as '实收本息',true_manage_money as '实收借款管理费',predict_repay_money as '预计实收本息',predict_manage_money as '预计实收借款管理费',update_time as '更新时间' from daily_collection_amount_statistics_cg where date = \"$time1\"";
     }elseif($time1==''||$time2=='') {
-        $query = "select date as '日期',repay_money as '应收本息',manage_money as '应收借款管理费',true_repay_money as '实收本息',true_manage_money as '实收借款管理费',update_time as '更新时间' from daily_collection_amount_statistics_cg where update_time = \"$time\"";
+        $query = "select date as '日期',repay_money as '应收本息',manage_money as '应收借款管理费',true_repay_money as '实收本息',true_manage_money as '实收借款管理费',predict_repay_money as '预计实收本息',predict_manage_money as '预计实收借款管理费',update_time as '更新时间' from daily_collection_amount_statistics_cg where data = \"$time\"";
     }else {
-        $query = "select date as '日期',repay_money as '应收本息',manage_money as '应收借款管理费',true_repay_money as '实收本息',true_manage_money as '实收借款管理费',update_time as '更新时间' from daily_collection_amount_statistics_cg where date >= \"$time1\" and date <= \"$time2\" and update_time = \"$time\"";
+        $query = "select date as '日期',repay_money as '应收本息',manage_money as '应收借款管理费',true_repay_money as '实收本息',true_manage_money as '实收借款管理费',predict_repay_money as '预计实收本息',predict_manage_money as '预计实收借款管理费',update_time as '更新时间' from daily_collection_amount_statistics_cg where date >= \"$time1\" and date <= \"$time2\"";
     }
     $result = mysqli_query($link, $query);
     $arr = $result->fetch_all(MYSQLI_ASSOC);
@@ -222,6 +222,8 @@ if($name == "M"){
         }else{
             $arr[$i]['实收借款管理费'] = number_format((($arr[$i]['实收借款管理费'])/10000),2,'.','');
         }
+        $arr[$i]['预计实收本息'] = number_format((($arr[$i]['预计实收本息'])/10000),2,'.','');
+        $arr[$i]['预计实收借款管理费'] = number_format((($arr[$i]['预计实收借款管理费'])/10000),2,'.','');
     }
 
 }elseif($name == "F"){
@@ -231,11 +233,11 @@ if($name == "M"){
     $today = new DateTime();
     $time = $today->format("Y-m-d");
     if($time1==$time2&&$time1!=''&&$time2!='') {
-        $query = "select date as '日期',repay_money as '应收本息',manage_money as '应收借款管理费',true_repay_money as '实收本息',true_manage_money as '实收借款管理费',update_time as '更新时间' from daily_collection_amount_statistics_tg where date = \"$time1\" and update_time = \"$time\"";
+        $query = "select date as '日期',repay_money as '应收本息',manage_money as '应收借款管理费',true_repay_money as '实收本息',true_manage_money as '实收借款管理费',predict_repay_money as '预计实收本息',predict_manage_money as '预计实收借款管理费',update_time as '更新时间' from daily_collection_amount_statistics_tg where date = \"$time1\"";
     }elseif($time1==''||$time2=='') {
-        $query = "select date as '日期',repay_money as '应收本息',manage_money as '应收借款管理费',true_repay_money as '实收本息',true_manage_money as '实收借款管理费',update_time as '更新时间' from daily_collection_amount_statistics_tg where update_time = \"$time\"";
+        $query = "select date as '日期',repay_money as '应收本息',manage_money as '应收借款管理费',true_repay_money as '实收本息',true_manage_money as '实收借款管理费',predict_repay_money as '预计实收本息',predict_manage_money as '预计实收借款管理费',update_time as '更新时间' from daily_collection_amount_statistics_tg where date = \"$time\"";
     }else {
-        $query = "select date as '日期',repay_money as '应收本息',manage_money as '应收借款管理费',true_repay_money as '实收本息',true_manage_money as '实收借款管理费',update_time as '更新时间' from daily_collection_amount_statistics_tg where date >= \"$time1\" and date <= \"$time2\" and update_time = \"$time\"";
+        $query = "select date as '日期',repay_money as '应收本息',manage_money as '应收借款管理费',true_repay_money as '实收本息',true_manage_money as '实收借款管理费',predict_repay_money as '预计实收本息',predict_manage_money as '预计实收借款管理费',update_time as '更新时间' from daily_collection_amount_statistics_tg where date >= \"$time1\" and date <= \"$time2\"";
     }
     $result = mysqli_query($link, $query);
     $arr = $result->fetch_all(MYSQLI_ASSOC);
@@ -253,6 +255,8 @@ if($name == "M"){
         }else{
             $arr[$i]['实收借款管理费'] = number_format((($arr[$i]['实收借款管理费'])/10000),2,'.','');
         }
+        $arr[$i]['预计实收本息'] = number_format((($arr[$i]['预计实收本息'])/10000),2,'.','');
+        $arr[$i]['预计实收借款管理费'] = number_format((($arr[$i]['预计实收借款管理费'])/10000),2,'.','');
     }
 }
 if($field =='还款压力'){
