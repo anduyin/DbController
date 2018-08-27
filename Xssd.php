@@ -255,7 +255,7 @@ $show = array();
                             <li>
                                 <a href="self_manage_interest_money_tg/self_manage_interest_money_tg.php" target="frame1">
                                     <span class="menu-text">
-                                    托管待收本金、管理费、利息
+                                    托管待收本金,管理费,利息
                                     </span>
                                     <i class="menu-expand"></i>
                                 </a>
