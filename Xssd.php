@@ -539,7 +539,7 @@ $show = array();
             <!-- /Page Sidebar -->
             <!-- Page Content -->
             <!-- <iframe src="show.php" width=85% height=900px style="position:relative;top:15px;left:250px;border: 0" name="frame1"></iframe> -->
-            <iframe src="show.php" width=99% height=900px style="position:relative;top:15px;left:0;border: 0" name="frame1"></iframe>
+            <iframe src="homePage.php" width=99% height=900px style="position:relative;top:15px;left:0;border: 0" name="frame1"></iframe>
                 <!-- /Page Body -->
             </div>
             <!-- /Page Content -->
