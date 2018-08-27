@@ -539,6 +539,14 @@ $show = array();
                                     <i class="menu-expand"></i>
                                 </a>
                             </li>
+                            <li>
+                                <a href="financial daily/clauseMoney.php" target="frame1">
+                                    <span class="menu-text">
+                                        回款用户投资提现
+                                    </span>
+                                    <i class="menu-expand"></i>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                 </ul>
