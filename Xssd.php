@@ -484,7 +484,55 @@ $show = array();
                             </li>
                         </ul>
                     </li>
-                      
+                    <li class = 'licai'>
+                        <a href="#" class="menu-dropdown">
+                            <i class="glyphicon glyphicon-download-alt" style="width:30px;text-align:center"></i>
+                            <span class="menu-text">理财端日报</span>
+                            <i class="menu-expand"></i>
+                        </a>
+                        <ul class="submenu">
+                            <li>
+                                <a href="financial daily/repayStatus.php" target="frame1">
+                                    <span class="menu-text">
+                                        投资情况
+                                    </span>
+                                    <i class="menu-expand"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="financial daily/regStatus.php" target="frame1">
+                                    <span class="menu-text">
+                                        注册及转化数据
+                                    </span>
+                                    <i class="menu-expand"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="financial daily/rechargeStatus.php" target="frame1">
+                                    <span class="menu-text">
+                                        充值及提现金额
+                                    </span>
+                                    <i class="menu-expand"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="financial daily/cardFeeStatus.php" target="frame1">
+                                    <span class="menu-text">
+                                        抵用券费用及转化率
+                                    </span>
+                                    <i class="menu-expand"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="financial daily/receivedMoney.php" target="frame1">
+                                    <span class="menu-text">
+                                        待收及资金站岗情况
+                                    </span>
+                                    <i class="menu-expand"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
                 <!-- /Sidebar Menu -->
             </div>
