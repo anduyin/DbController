@@ -7,7 +7,7 @@
  */
 require_once 'Common.php';
 $name = $_SESSION['username'];
-$time = date('Y-m-d H:i:s',(time()+8*3600));
+$time = date('Y-m-d H:i:s',time());
 ?>
 <html>
 <head>
