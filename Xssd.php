@@ -260,6 +260,14 @@ $show = array();
                                     <i class="menu-expand"></i>
                                 </a>
                             </li>
+                            <li>
+                                <a href="recruiting_ivy/recruitingIvy.php" target="frame1">
+                                    <span class="menu-text">
+                                    待收按应还月份汇总
+                                    </span>
+                                    <i class="menu-expand"></i>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     <li class = 'finance'>
