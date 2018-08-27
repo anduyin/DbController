@@ -6,7 +6,7 @@
  * Time: 14:51
  */
 require_once '../Common.php';
-$query = "SELECT * FROM `xssd_recruiting_ivy` ORDER BY create_time DESC ";
+$query = "SELECT * FROM `xssd_recruiting_ivy` ORDER BY creat_time DESC ";
 $result = mysqli_query($link, $query);
 $arr = $result->fetch_all(MYSQLI_ASSOC);
 mysqli_close($link);
