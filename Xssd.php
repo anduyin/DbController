@@ -326,6 +326,14 @@ $show = array();
                                 </a>
                             </li>
                             <li>
+                                <a href="calculate_the_balance_every_hour/calculateTheBalance.php" target="frame1">
+                                    <span class="menu-text">
+                                    存管余额数据表
+                                    </span>
+                                    <i class="menu-expand"></i>
+                                </a>
+                            </li>
+                            <li>
                                 <a href="financial_budget_statistics_cg/financialBudget_cg.php" target="frame1">
                                     <span class="menu-text">
                                     收支预计
