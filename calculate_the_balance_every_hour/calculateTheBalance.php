@@ -129,7 +129,7 @@
 <body style="background-color:#fff;">
 
 	<div style="text-align: center" class="top">
-		<span style="font-size:18px;color:#262626;float:left;margin-left:25px;">财务 > </span>
+		<span style="font-size:18px;color:#262626;float:left;margin-left:25px;">财务(存管) > </span>
         <span style="font-size:18px;color:#F44B2A;float:left;">存管余额数据表</span>
     </div>
 		<div class="search">
@@ -189,6 +189,7 @@
         selectTotal = function (page,pageSize){
             var page = page || 1;
             var pageSize = pageSize || 30;
+            var info = {};
             info['code'] = 'searchTotal';
             info['page'] = page;
             info['pageSize'] = pageSize;
