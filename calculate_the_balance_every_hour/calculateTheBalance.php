@@ -139,7 +139,9 @@
             <input type="text" name = 'cost' value="" id="cost">
             <span>余额:</span>
             <input type="text" name = 'balance' value="" id="balance">
-            <input type='button' value="充值" class="btn" id="kejin">
+            <span>输入授权密码:</span>
+            <input type="text" name = 'password' value="" id="password">
+            <input type='button' value="重置余额" class="btn" id="kejin">
 		</div>
 	
 	<div id="example" class="moneyTable"></div>
@@ -211,11 +213,12 @@
                 }
             });
         }
-        //充值
+        //重置余额
         recharge = function(page,pageSize){
             var info = {};
             var cost = $("#cost").val();
             var balance = $("#balance").val();
+            var password = $("#password").val();
             var page = page || 1;
             var pageSize = pageSize || 30;
             info['code'] = 'recharge';
@@ -223,6 +226,7 @@
             info['pageSize'] = pageSize;
             info['cost'] = cost;
             info['balance'] = balance;
+            info['password'] = password;
             console.log(info);
             $.ajax({
                 url:"calculateTheBalanceController.php",

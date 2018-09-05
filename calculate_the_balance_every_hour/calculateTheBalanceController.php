@@ -74,7 +74,14 @@ function getthemonth($date){
     return array($firstday,$lastday);
 }
 //充值插入数据
-function recharge($link){
+function recharge($link,$AuthorizationCode){
+    $pwd = $_POST['password'];
+    if($pwd != $AuthorizationCode){
+        $json['code'] =100;
+        $json['message'] = '授权密码输入错误!';
+        echo json_encode($json);
+        return;
+    }
     $cost = $_POST['cost'];
     $balance = $_POST['balance'];
     if(!preg_match('/^(?:0|\-?(?:0\.\d*[1-9]|[1-9]\d*(?:\.\d*[1-9])?))$/',$cost)){
@@ -123,5 +130,5 @@ function recharge($link){
 if($_POST&&$_POST['code']=='searchTotal') {
     searchTotal($link);
 }elseif($_POST&&$_POST['code']=='recharge'){
-    recharge($link);
+    recharge($link,$AuthorizationCode);
 }

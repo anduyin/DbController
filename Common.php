@@ -16,4 +16,5 @@
 	}
 	
 	$pdo=new PDO('mysql:host=127.0.0.1;dbname=test','root','root');*/
+	$AuthorizationCode = '4fgdsgr245465t5ge576754yh';
 ?>
