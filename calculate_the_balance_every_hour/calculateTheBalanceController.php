@@ -14,34 +14,15 @@ function searchTotal($link){
     $pageSize = $_POST['pageSize'];
     $index= ($page-1)*$pageSize;
     $limit = ' limit '.$index.','.$pageSize;
-    $whereSql = '';
-    if(!empty($where)&&is_array($where)){
-        foreach($where as $k=>$v){
-            if($v == ''){
-                unset($where[$k]);
-            }
-        }
-        $num = count($where);
-        foreach($where as $key=>$value){
-            if($num == 1){
-                $whereSql = $key.'\''.$value.'\'';
-            }else{
-                $whereSql .= $key.'\''.$value.'\''.' and ';
-            }
-        }
-        if($num!=1){
-            $whereSql = substr_replace($whereSql,' ',-4,4);
-        }
-        $whereSql = 'where '.$whereSql;
-    }
-    if(empty($where)){
-        $whereSql = '';
-    }
-    $query = "select * from `calculate_the_balance_every_hour`".$whereSql.$limit;
+    $field = "startdate,enddate,cost,type,balance";
+    $query = "select ".$field." from `calculate_the_balance_every_hour` order by startdate desc ".$limit;
     $result = mysqli_query($link, $query);
     $arr = $result->fetch_all(MYSQLI_ASSOC);
+    foreach($arr as $key=>$value){
+        $arr[$key]['type'] = $value['type'] == '0'?$value['type'] = '扣费':$value['type'] = '充值';
+    }
     //求总页数
-    $totalSql = "select count(*) from `calculate_the_balance_every_hour`".$whereSql;
+    $totalSql = "select count(*) from `calculate_the_balance_every_hour`";
     $totalRe = mysqli_query($link,$totalSql);
     $num = $totalRe->fetch_row();
     $max = ceil($num[0]/$pageSize);
