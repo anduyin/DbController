@@ -100,7 +100,7 @@ function recharge($link,$AuthorizationCode){
     $pageSize = $_POST['pageSize'];
     $index= ($page-1)*$pageSize;
     $limit = ' limit '.$index.','.$pageSize;
-    $time = "\"".date('Y-m-d H:i:s',time()+28800)."\"";
+    $time = "\"".date('Y-m-d H:i:s',time())."\"";
     $type = 1;
     $query = "INSERT INTO `calculate_the_balance_every_hour`(startdate,enddate,cost,type,balance) VALUES({$time},{$time},{$cost},{$type},{$balance})";
     $re = mysqli_query($link, $query);

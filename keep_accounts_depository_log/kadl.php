@@ -133,19 +133,6 @@
 		<span style="font-size:18px;color:#262626;float:left;margin-left:25px;">财务(存管)></span>
         <span style="font-size:18px;color:#F44B2A;float:left;">存管接口调用服务费</span>
     </div>
-		<div class='recharge'>
-				<!-- 计算服务费功能 -->
-			<span>计算接口服务费余额:</span>
-			</br>
-			<span>选择充值日期:</span>
-			<input type="date" value="" id = "rechargeTime">
-			</br>
-			<span>充值金额(元):</span>
-			<input type='input' value="" id="money">
-			<input type='button' value="计算结果" class="btn" id="count">
-			<span id = "answer"></span>
-				<!-- 计算服务费功能 End-->
-		</div>
 		<div class="search">
 			<input type="date" value="" id = "time1">
 			&nbsp;&nbsp;至&nbsp;&nbsp;
@@ -234,29 +221,7 @@ var hot = new Handsontable(container, {
 			}
 		});
 	});
-	//计算接口服务费余额
-	$("#count").click(function(){
-		var rechargeInfo = {};
-		var money = $("#money").val();
-		var rechargeTime = $("#rechargeTime").val();
-		if(rechargeTime==""){
-				alert("时间范围选择错误");
-				return;
-			}
-		rechargeInfo[0] = rechargeTime;		
-		rechargeInfo[1] = money;	
-		rechargeInfo[2] = 'money';	
-		$.ajax({
-			url:"kadlController.php",
-			type:"post",
-			data:rechargeInfo,
-			success:function(re){
-				var num = re+'元';
-				$("#answer").empty();
-				$("#answer").html(num);
-			}
-		});
-	});
+
 	//查询(总额)
 	$("#searchTotal").click(function(){
 		var info={};
