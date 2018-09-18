@@ -11,6 +11,9 @@ $show = array();
     if(strpos($permission,'admin')===false){
         $show[] = '$(".admin").css("display","none")';
     }
+if(strpos($permission,'licaiM')===false){
+    $show[] = '$(".licaiM").css("display","none")';
+}
 ?>
 <html>
 <head>
@@ -551,6 +554,63 @@ $show = array();
                                 <a href="financial daily/clauseMoney.php" target="frame1">
                                     <span class="menu-text">
                                         回款用户投资提现
+                                    </span>
+                                    <i class="menu-expand"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class = 'licaiM'>
+                        <a href="#" class="menu-dropdown">
+                            <i class="glyphicon glyphicon-download-alt" style="width:30px;text-align:center"></i>
+                            <span class="menu-text">理财端月报</span>
+                            <i class="menu-expand"></i>
+                        </a>
+                        <ul class="submenu">
+                            <li>
+                                <a href="licai_monthly_bonus_fee/view.php" target="frame1">
+                                    <span class="menu-text">
+                                        优惠券费用
+                                    </span>
+                                    <i class="menu-expand"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="licai_monthly_notrepay/view.php" target="frame1">
+                                    <span class="menu-text">
+                                        月末的平台待收
+                                    </span>
+                                    <i class="menu-expand"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="licai_monthly_overview_of_the_platform/view.php" target="frame1">
+                                    <span class="menu-text">
+                                        平台整体概况
+                                    </span>
+                                    <i class="menu-expand"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="licai_monthly_recharge_carry/view.php" target="frame1">
+                                    <span class="menu-text">
+                                        充值提现金额
+                                    </span>
+                                    <i class="menu-expand"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="licai_monthly_register/view.php" target="frame1">
+                                    <span class="menu-text">
+                                        当月注册用户转化效率
+                                    </span>
+                                    <i class="menu-expand"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="licai_monthly_repay_invest/view.php" target="frame1">
+                                    <span class="menu-text">
+                                        回款复投人数
                                     </span>
                                     <i class="menu-expand"></i>
                                 </a>
