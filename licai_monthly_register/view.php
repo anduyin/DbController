@@ -7,7 +7,7 @@
  */
 
 require_once '../Common.php';
-$query = "SELECT * FROM `licai_monthly_register` ORDER BY give_month DESC ";
+$query = "SELECT * FROM `licai_monthly_register` ORDER BY register_month DESC ";
 $result = mysqli_query($link, $query);
 $arr = $result->fetch_all(MYSQLI_ASSOC);
 mysqli_close($link);
