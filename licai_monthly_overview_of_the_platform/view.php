@@ -11,7 +11,7 @@ $query = "SELECT * FROM `licai_monthly_overview_of_the_platform` ORDER BY invest
 $result = mysqli_query($link, $query);
 $arr = $result->fetch_all(MYSQLI_ASSOC);
 mysqli_close($link);
-$head = array('ID','投资月份','推荐人','期限','投资金额','投资笔数','投资人数');
+$head = array('ID','投资月份','新老客','推荐人','期限','投资金额','投资笔数','投资人数');
 $headjson = json_encode($head);
 $json = json_encode($arr);
 ?>
