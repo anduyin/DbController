@@ -6,11 +6,12 @@
  * Time: 11:20
  */
 	require_once '../Common.php';
-	$query = "SELECT * FROM `xssd_repay_status` ORDER BY create_time DESC ";
+	$field = "invest_date,new_old,pid,repay_time,invest_money,invest_n_count,invest_people_count";
+	$query = "SELECT ".$field." FROM `xssd_repay_status` ORDER BY invest_date DESC ";
 	$result = mysqli_query($link, $query);
 	$arr = $result->fetch_all(MYSQLI_ASSOC);
 	mysqli_close($link);
-	$head = array('日期','推荐人','产品期限','投资金额','投资人数','投资笔数','笔均投资金额','人均投资金额');
+	$head = array('投资日期','新老客','推荐人','期限','投资金额','投资笔数','投资人数');
 	$headjson = json_encode($head);
 	$json = json_encode($arr);
 ?>
