@@ -331,7 +331,7 @@ if(strpos($permission,'licaiM')===false){
                             <li>
                                 <a href="calculate_the_balance_every_hour/calculateTheBalance.php" target="frame1">
                                     <span class="menu-text">
-                                    存管余额数据表
+                                    存管接口预存款余额
                                     </span>
                                     <i class="menu-expand"></i>
                                 </a>
