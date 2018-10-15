@@ -9,7 +9,7 @@
 	mysqli_close($link);
 	$head = array('id','日期','渠道','贷款类型','真实注册','优化数','结算金额','进件数','通过件数','通过金额','验证费收入','输出成功件数','输出收入','更新日期');
 	$headjson = json_encode($head);
-	$json = json_encode($array);
+	$json = json_encode($arr);
 ?>
 <!DOCTYPE html>
 <html style="position: absolute; left: 0; top: 0;">

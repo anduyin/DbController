@@ -14,6 +14,9 @@ $show = array();
 if(strpos($permission,'licaiM')===false){
     $show[] = '$(".licaiM").css("display","none")';
 }
+if(strpos($permission,'licai')===false){
+    $show[] = '$(".licai").css("display","none")';
+}
 if(strpos($permission,'longfenqi')===false){
     $show[] = '$(".longfenqi").css("display","none")';
 }
@@ -622,7 +625,7 @@ if(strpos($permission,'longfenqi')===false){
                     </li>
                     <li class = 'longfenqi'>
                         <a href="#" class="menu-dropdown">
-                            <i class="glyphicon glyphicon-download-alt" style="width:30px;text-align:center"></i>
+                            <i class="menu-icon fa fa-user"></i>
                             <span class="menu-text">龙分期</span>
                             <i class="menu-expand"></i>
                         </a>
@@ -630,7 +633,7 @@ if(strpos($permission,'longfenqi')===false){
                             <li>
                                 <a href="channel_stat/channel_stat_view.php" target="frame1">
                                     <span class="menu-text">
-                                        渠道统计
+                                    渠道统计
                                     </span>
                                     <i class="menu-expand"></i>
                                 </a>
