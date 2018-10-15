@@ -14,6 +14,9 @@ $show = array();
 if(strpos($permission,'licaiM')===false){
     $show[] = '$(".licaiM").css("display","none")';
 }
+if(strpos($permission,'longfenqi')===false){
+    $show[] = '$(".longfenqi").css("display","none")';
+}
 ?>
 <html>
 <head>
@@ -611,6 +614,23 @@ if(strpos($permission,'licaiM')===false){
                                 <a href="licai_monthly_repay_invest/view.php" target="frame1">
                                     <span class="menu-text">
                                         回款复投人数
+                                    </span>
+                                    <i class="menu-expand"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class = 'longfenqi'>
+                        <a href="#" class="menu-dropdown">
+                            <i class="glyphicon glyphicon-download-alt" style="width:30px;text-align:center"></i>
+                            <span class="menu-text">龙分期</span>
+                            <i class="menu-expand"></i>
+                        </a>
+                        <ul class="submenu">
+                            <li>
+                                <a href="channel_stat/channel_stat_view.php" target="frame1">
+                                    <span class="menu-text">
+                                        渠道统计
                                     </span>
                                     <i class="menu-expand"></i>
                                 </a>
