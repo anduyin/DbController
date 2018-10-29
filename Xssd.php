@@ -541,6 +541,14 @@ if(strpos($permission,'longfenqi')===false){
                                 </a>
                             </li>
                             <li>
+                                <a href="financial daily/rechargeStatusTg.php" target="frame1">
+                                    <span class="menu-text">
+                                        充值及提现金额(托管)
+                                    </span>
+                                    <i class="menu-expand"></i>
+                                </a>
+                            </li>
+                            <li>
                                 <a href="financial daily/cardFeeStatus.php" target="frame1">
                                     <span class="menu-text">
                                         抵用券费用及转化率
