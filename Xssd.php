@@ -646,6 +646,46 @@ if(strpos($permission,'longfenqi')===false){
                                     <i class="menu-expand"></i>
                                 </a>
                             </li>
+                            <li>
+                                <a href="channel_stat/tenwinCgRegisterLoginBorrowCount.php" target="frame1">
+                                    <span class="menu-text">
+                                    存管注册,申请,登录用户数
+                                    </span>
+                                    <i class="menu-expand"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="channel_stat/tenwinCommissionerFollowCount.php" target="frame1">
+                                    <span class="menu-text">
+                                    各专员跟进数表
+                                    </span>
+                                    <i class="menu-expand"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="channel_stat/tenwinGradientFollow.php" target="frame1">
+                                    <span class="menu-text">
+                                    梯度按跟进时间排序表
+                                    </span>
+                                    <i class="menu-expand"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="channel_stat/tenwinAssignGradientStatistics.php" target="frame1">
+                                    <span class="menu-text">
+                                    分配梯度统计(数量版)
+                                    </span>
+                                    <i class="menu-expand"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="channel_stat/tenwinAssignGradientStatistics.php" target="frame1">
+                                    <span class="menu-text">
+                                    分配梯度统计(数量版)
+                                    </span>
+                                    <i class="menu-expand"></i>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                 </ul>
