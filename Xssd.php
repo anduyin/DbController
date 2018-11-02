@@ -662,7 +662,7 @@ if(strpos($permission,'longfenqi')===false){
                                     <i class="menu-expand"></i>
                                 </a>
                             </li>
-                            <!--<li>
+                            <li>
                                 <a href="channel_stat/tenwinGradientFollow.php" target="frame1">
                                     <span class="menu-text">
                                     梯度按跟进时间排序表
@@ -671,9 +671,9 @@ if(strpos($permission,'longfenqi')===false){
                                 </a>
                             </li>
                             <li>
-                                <a href="channel_stat/tenwinAssignGradientStatistics.php" target="frame1">
+                                <a href="channel_stat/tenwinDailyIncome.php" target="frame1">
                                     <span class="menu-text">
-                                    分配梯度统计(数量版)
+                                    每日营收统计
                                     </span>
                                     <i class="menu-expand"></i>
                                 </a>
@@ -681,11 +681,11 @@ if(strpos($permission,'longfenqi')===false){
                             <li>
                                 <a href="channel_stat/tenwinAssignGradientStatistics.php" target="frame1">
                                     <span class="menu-text">
-                                    分配梯度统计(数量版)
+                                    分配梯度统计
                                     </span>
                                     <i class="menu-expand"></i>
                                 </a>
-                            </li>-->
+                            </li>
                         </ul>
                     </li>
                 </ul>

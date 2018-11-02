@@ -1,13 +1,16 @@
 <?php
 
 require_once '../Common.php';
-require_once '../main.php';
-$main = new main();
-$field = $main->getColumnName($link,'tenwin_cg_register_login_borrow_count');
-$head = $main->getColumnComment($link,'tenwin_cg_register_login_borrow_count');
-$query = "SELECT {$field} FROM `tenwin_cg_register_login_borrow_count` ORDER BY create_date DESC ";
+$query = "SELECT `date`,front_end_income,back_end_income FROM `tenwin_daily_income` ORDER BY `date` DESC ";
 $result = mysqli_query($link, $query);
 $arr = $result->fetch_all(MYSQLI_ASSOC);
+$q = "SELECT COLUMN_COMMENT FROM information_schema.COLUMNS WHERE TABLE_NAME = 'tenwin_daily_income'";
+$r = mysqli_query($link, $q);
+$ar = $r->fetch_all(MYSQLI_ASSOC);
+unset($ar[0]);
+foreach($ar as $value){
+    $head[] = $value['COLUMN_COMMENT'];
+}
 mysqli_close($link);
 $headjson = json_encode($head);
 $json = json_encode($arr);
@@ -75,7 +78,7 @@ $json = json_encode($arr);
         }
     </style>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>存管注册,申请,登录用户数</title>
+    <title>每日营收统计</title>
     <script src="../jquery-3.2.1.min.js"></script>
     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -87,7 +90,7 @@ $json = json_encode($arr);
 
 <div style="text-align: center" class="top">
     <span style="font-size:18px;color:#262626;float:left;margin-left:25px;">龙分期></span>
-    <span style="font-size:18px;color:#F44B2A;float:left;">存管注册,申请,登录用户数</span>
+    <span style="font-size:18px;color:#F44B2A;float:left;">每日营收统计</span>
 </div>
 <div class="search">
     <input type='button' value="下载" class="btn" id="download">
@@ -123,11 +126,7 @@ $json = json_encode($arr);
             headInfo[h] = [0,h,head[h]];
         }
         hot.setDataAtCell(headInfo);
-        exportPlugin.downloadFile('csv', {filename: '存管注册,申请,登录用户数'});
+        exportPlugin.downloadFile('csv', {filename: '每日营收统计'});
     })
-
-
-
-
 </script>
 </html>

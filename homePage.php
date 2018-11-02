@@ -17,7 +17,7 @@ $time = date('Y-m-d H:i:s',time());
 <body>
     <div>
         <h1>欢迎登陆,<?PHP echo $name?></h1>
-        <h2>登陆时间<?php echo $time?></h2>
+        <h2>当前时间<?php echo $time?></h2>
     </div>
 </body>
 </html>

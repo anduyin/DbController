@@ -1,13 +1,16 @@
 <?php
 /* 龙分期 -> 渠道统计
  *  */
-	
 	require_once '../Common.php';
-	$query = "SELECT * FROM `channel_stat` order by date desc";
+    require_once '../main.php';
+	$main = new main();
+	$field = $main->getColumnName($link,'channel_stat');
+	$head = $main->getColumnComment($link,'channel_stat');
+	$query = "SELECT {$field} FROM `channel_stat` order by date desc";
 	$result = mysqli_query($link, $query);
 	$arr = $result->fetch_all(MYSQLI_ASSOC);
 	mysqli_close($link);
-	$head = array('id','日期','渠道','贷款类型','真实注册','优化数','结算金额','进件数','通过件数','通过金额','验证费收入','输出成功件数','输出收入','更新日期');
+	//$head = array('id','日期','渠道','贷款类型','真实注册','优化数','结算金额','进件数','通过件数','通过金额','验证费收入','输出成功件数','输出收入','更新日期');
 	$headjson = json_encode($head);
 	$json = json_encode($arr);
 ?>
@@ -139,7 +142,7 @@ var hot = new Handsontable(container, {
     data: data,
     rowHeaders: true,
     colHeaders: <?php echo $headjson?>,
-    colWidths: 230,
+    colWidths: 120,
     filters: true,
     dropdownMenu: true,
     manualColumnFreeze: true,

@@ -1,16 +1,13 @@
 <?php
 
 require_once '../Common.php';
-$query = "SELECT department,`group`,admin_real_name,is_chargehand,create_date,assignment,follow,deal,update_date FROM `tenwin_commissioner_follow_count` ORDER BY create_date DESC ";
+require_once '../main.php';
+$main = new main();
+$field = $main->getColumnName($link,'tenwin_commissioner_follow_count');
+$head = $main->getColumnComment($link,'tenwin_commissioner_follow_count');
+$query = "SELECT {$field} FROM `tenwin_commissioner_follow_count` ORDER BY create_date DESC ";
 $result = mysqli_query($link, $query);
 $arr = $result->fetch_all(MYSQLI_ASSOC);
-$q = "SELECT COLUMN_COMMENT FROM information_schema.COLUMNS WHERE TABLE_NAME = 'tenwin_commissioner_follow_count'";
-$r = mysqli_query($link, $q);
-$ar = $r->fetch_all(MYSQLI_ASSOC);
-unset($ar[0]);
-foreach($ar as $value){
-    $head[] = $value['COLUMN_COMMENT'];
-}
 mysqli_close($link);
 $headjson = json_encode($head);
 $json = json_encode($arr);
