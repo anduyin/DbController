@@ -1,16 +1,28 @@
 <?php
 
 require_once '../Common.php';
-require_once '../main.php';
-$main = new main();
-$field = $main->getColumnName($link,'tenwin_assign_gradient_statistics');
-$head = $main->getColumnComment($link,'tenwin_assign_gradient_statistics');
-$query = "SELECT {$field} FROM `tenwin_assign_gradient_statistics` ORDER BY create_date DESC ";
-$result = mysqli_query($link, $query);
-$arr = $result->fetch_all(MYSQLI_ASSOC);
+//获得分配梯度统计(数量版)
+$field_num = "create_date,assignment,follow,deal,follow_deal,pay,front_end_income,back_end_income";
+$query_num = "SELECT {$field_num} FROM `tenwin_assign_gradient_statistics` ORDER BY create_date DESC ";
+$result_num = mysqli_query($link, $query_num);
+$arr_num = $result_num->fetch_all(MYSQLI_ASSOC);
+$head_num = ['分配日期','分配数','跟进数','成交数','跟进成交数','下款数','前端营收','后端营收'];
+$headjson_num = json_encode($head_num);
+$json_num = json_encode($arr_num);
+//分配梯度统计(百分比版)
+$field_per = "create_date,follow_rate,deal_rate,follow_deal_rate,pay_rate";
+$query_per = "SELECT {$field_per} FROM `tenwin_assign_gradient_statistics` ORDER BY create_date DESC ";
+$result_per = mysqli_query($link, $query_per);
+$arr_per = $result_per->fetch_all(MYSQLI_ASSOC);
+$head_per = ['分配日期','跟进率','成交率','跟进成交率','下款率'];
+$headjson_per = json_encode($head_per);
+$json_per = json_encode($arr_per);
+//获取梯度
+$sql = "select gradient_title from `tenwin_assign_gradient_statistics` group by gradient_title";
+$execSql = mysqli_query($link,$sql);
+$title = $execSql->fetch_all(MYSQLI_ASSOC);
+var_dump($title);exit;
 mysqli_close($link);
-$headjson = json_encode($head);
-$json = json_encode($arr);
 ?>
 <!DOCTYPE html>
 <html style="position: absolute; left: 0; top: 0;">
@@ -90,41 +102,86 @@ $json = json_encode($arr);
     <span style="font-size:18px;color:#F44B2A;float:left;">分配梯度统计</span>
 </div>
 <div class="search">
+    时间范围:
+    <date></date>
+    梯度:
+    <select name="gradient_title" id="gradient_title">
+        <option value="-1">全部梯度</option>
+        <?php foreach($title as $k=>$v){?>
+            <option value="<?php echo $k?>"><?php echo $v['gradient_title']?></option>
+        <?php }?>
+    </select>
+    <input type='button' value="查询" class="btn" id="search">
     <input type='button' value="下载" class="btn" id="download">
 </div>
-<div id="example" class="moneyTable"></div>
+<h2>分配梯度统计(数量版)</h2>
+<div id="example_num" class="moneyTable"></div>
+<h2>分配梯度统计(百分比版)</h2>
+<div id="example_per" class="moneyTable"></div>
 
 
 </body>
 <script type="text/javascript">
-    var data = <?php echo $json;?>;
-    var container = document.getElementById('example');
-    var hot = new Handsontable(container, {
-        data: data,
-        rowHeaders: true,
-        colHeaders: <?php echo $headjson?>,
-        colWidths: [120,1200,100,100,100,100,100,100,100,100,100,100,100,120],
+    var data_num = <?php echo $json_num;?>;
+    var container_num = document.getElementById('example_num');
+    var hot_num = new Handsontable(container_num, {
+        data: data_num,
+        rowHeaders: false,
+        colHeaders: <?php echo $headjson_num?>,
+        colWidths: 120,
         filters: true,
-        dropdownMenu: true,
+        dropdownMenu: false,
         manualColumnFreeze: true,
         forceNumeric: true,
         manualColumnResize: true,
         sortIndicator: true,
+        readOnly:true,
         columnSorting: true,
         fixedRowsBottom: 2
     });
 
-    var exportPlugin = hot.getPlugin('exportFile');
+    var exportPlugin_num = hot_num.getPlugin('exportFile');
     $("#download").click(function(){
-        hot.alter('insert_row', 0);
-        var head = <?php echo $headjson?>;
+        hot_num.alter('insert_row', 0);
+        var head = <?php echo $headjson_num?>;
         var headInfo = [];
         for(var h=0;h<head.length;h++){
             headInfo[h] = [0,h,head[h]];
         }
-        hot.setDataAtCell(headInfo);
-        exportPlugin.downloadFile('csv', {filename: '分配梯度统计'});
+        hot_num.setDataAtCell(headInfo);
+        exportPlugin_num.downloadFile('csv', {filename: '分配梯度统计(数量版)'});
     })
+
+    var data_per = <?php echo $json_per;?>;
+    var container_per = document.getElementById('example_per');
+    var hot_per = new Handsontable(container_per, {
+        data: data_per,
+        rowHeaders: false,
+        colHeaders: <?php echo $headjson_per?>,
+        colWidths: 120,
+        filters: true,
+        dropdownMenu: false,
+        manualColumnFreeze: true,
+        forceNumeric: true,
+        manualColumnResize: true,
+        sortIndicator: true,
+        readOnly:true,
+        columnSorting: true,
+        fixedRowsBottom: 2
+    });
+
+    var exportPlugin_per = hot_per.getPlugin('exportFile');
+    $("#download").click(function(){
+        hot_per.alter('insert_row', 0);
+        var head = <?php echo $headjson_per?>;
+        var headInfo = [];
+        for(var h=0;h<head.length;h++){
+            headInfo[h] = [0,h,head[h]];
+        }
+        hot_per.setDataAtCell(headInfo);
+        exportPlugin_per.downloadFile('csv', {filename: '分配梯度统计(百分比版)'});
+    })
+
 
 
 

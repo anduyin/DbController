@@ -1,16 +1,12 @@
 <?php
 
 require_once '../Common.php';
+require_once '../main.php';
+$main = new main();
 $query = "SELECT `date`,front_end_income,back_end_income FROM `tenwin_daily_income` ORDER BY `date` DESC ";
 $result = mysqli_query($link, $query);
 $arr = $result->fetch_all(MYSQLI_ASSOC);
-$q = "SELECT COLUMN_COMMENT FROM information_schema.COLUMNS WHERE TABLE_NAME = 'tenwin_daily_income'";
-$r = mysqli_query($link, $q);
-$ar = $r->fetch_all(MYSQLI_ASSOC);
-unset($ar[0]);
-foreach($ar as $value){
-    $head[] = $value['COLUMN_COMMENT'];
-}
+$head = $main->getColumnComment($link,'tenwin_daily_income');
 mysqli_close($link);
 $headjson = json_encode($head);
 $json = json_encode($arr);
@@ -114,6 +110,7 @@ $json = json_encode($arr);
         manualColumnResize: true,
         sortIndicator: true,
         columnSorting: true,
+        readOnly:true,
         fixedRowsBottom: 2
     });
 

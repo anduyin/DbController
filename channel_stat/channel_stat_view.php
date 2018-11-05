@@ -150,6 +150,7 @@ var hot = new Handsontable(container, {
     manualColumnResize: true,
     sortIndicator: true,
     columnSorting: true,
+    readOnly:true,
     fixedRowsBottom: 2
 });
 

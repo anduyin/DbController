@@ -1,0 +1,5 @@
+$this->link = mysqli_connect('127.0.0.1','root','RFO9oYkjb^nNgXuE','xssdstat',3306);
+        if(!$this->link){
+            echo "Ê§°Ü";exit;
+        }
+        $this->pdo=new PDO('mysql:host=127.0.0.1;dbname=xssdstat','root','RFO9oYkjb^nNgXuE');
