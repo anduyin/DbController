@@ -70,21 +70,24 @@ function searchTotal($link){
             $trueWhere .= $k.$v.' AND ';
         }
     }
+    if($maxNum){
+        $trueWhere = " WHERE ".$trueWhere;
+    }
     $page = $_POST['page'];
     $pageSize = $_POST['pageSize'];
     $index= ($page-1)*$pageSize;
     $limit = ' limit '.$index.','.$pageSize;
     $field = $main->getColumnName($link,'tengwin_service_application');
-    $query = "select {$field} from `tengwin_service_application` WHERE {$trueWhere} ORDER BY registration_time DESC {$limit}";
+    $query = "select {$field} from `tengwin_service_application` {$trueWhere} ORDER BY registration_time DESC {$limit}";
     $result = mysqli_query($link, $query);
     $arr = $result->fetch_all(MYSQLI_ASSOC);
     //求总页数
-    $totalSql = "select count('*') from `tengwin_service_application` WHERE {$trueWhere} ORDER BY registration_time DESC ";
+    $totalSql = "select count('*') from `tengwin_service_application` {$trueWhere} ORDER BY registration_time DESC ";
     $totalRe = mysqli_query($link,$totalSql);
     $num = $totalRe->fetch_row();
     $max = ceil($num[0]/$pageSize);
     //计算总服务金额
-    $total_sql = "SELECT sum(amount) as total FROM `tengwin_service_application` WHERE {$trueWhere} ORDER BY registration_time DESC";
+    $total_sql = "SELECT COALESCE(sum(amount),0) as total FROM `tengwin_service_application` {$trueWhere} ORDER BY registration_time DESC";
     $result_total = mysqli_query($link, $total_sql);
     $totalMoney = $result_total->fetch_assoc();
     mysqli_close($link);
@@ -95,8 +98,54 @@ function searchTotal($link){
     echo  json_encode($json);
 }
 
-if($_POST&&$_POST['code']=='search') {
+function searchGradient($link){
+    $where = [];
+    $create_date_start = $_POST['create_date_start'];
+    $create_date_end = $_POST['create_date_end'];
+    $gradient = $_POST['gradient'];
+    $trueWhere = '';
+    if($gradient!='-1'){
+        $where['gradient ='] = $gradient;
+    }
+
+    if($create_date_start && $create_date_end){
+        $where['create_date >= '] = "\"".$create_date_start."\"";
+        $where["create_date <= "] = "\"".$create_date_end."\"";
+    }
+
+    $maxNum = count($where);
+    $numWhere = 0;
+    foreach($where as $k=>$v){
+        $numWhere++;
+        if($maxNum == $numWhere){
+            $trueWhere .= $k.$v;
+        }else{
+            $trueWhere .= $k.$v.' AND ';
+        }
+    }
+    if($maxNum){
+        $trueWhere = " WHERE ".$trueWhere;
+    }
+    //求分配梯度统计(数量版)
+    $field_num = "create_date,assignment,follow,deal,follow_deal,pay,front_end_income,back_end_income";
+    $query = "select {$field_num} from `tenwin_assign_gradient_statistics` {$trueWhere} ORDER BY create_date DESC ";
+    $result = mysqli_query($link, $query);
+    $arr_num = $result->fetch_all(MYSQLI_ASSOC);
+    //分配梯度统计(百分比版)
+    $field_per = "create_date,follow_rate,deal_rate,follow_deal_rate,pay_rate";
+    $query = "select {$field_per} from `tenwin_assign_gradient_statistics` {$trueWhere} ORDER BY create_date DESC ";
+    $result = mysqli_query($link, $query);
+    $arr_per = $result->fetch_all(MYSQLI_ASSOC);
+    mysqli_close($link);
+    $json['dataNum'] = $arr_num;
+    $json['dataPer'] = $arr_per;
+    echo  json_encode($json);
+}
+
+if($_POST&&$_POST['code']=='tengwin_service_application') {
     searchTotal($link);
+}elseif($_POST&&$_POST['code']=='tenwin_assign_gradient_statistics'){
+    searchGradient($link);
 }
 
 

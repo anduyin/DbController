@@ -678,18 +678,26 @@ if(strpos($permission,'longfenqi')===false){
                                     <i class="menu-expand"></i>
                                 </a>
                             </li>
-                            <!--<li>
+                            <li>
                                 <a href="channel_stat/tenwinAssignGradientStatistics.php" target="frame1">
                                     <span class="menu-text">
                                     分配梯度统计
                                     </span>
                                     <i class="menu-expand"></i>
                                 </a>
-                            </li>-->
+                            </li>
                             <li>
                                 <a href="channel_stat/tengwinServiceApplicationt.php" target="frame1">
                                     <span class="menu-text">
                                     服务申请列表
+                                    </span>
+                                    <i class="menu-expand"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="channel_stat/assetsStateStatistics.php" target="frame1">
+                                    <span class="menu-text">
+                                    每日上标放款量
                                     </span>
                                     <i class="menu-expand"></i>
                                 </a>

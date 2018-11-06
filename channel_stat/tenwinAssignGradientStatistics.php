@@ -18,10 +18,10 @@ $head_per = ['分配日期','跟进率','成交率','跟进成交率','下款率
 $headjson_per = json_encode($head_per);
 $json_per = json_encode($arr_per);
 //获取梯度
-$sql = "select gradient_title from `tenwin_assign_gradient_statistics` group by gradient_title";
+$sql = "select gradient_title,gradient from `tenwin_assign_gradient_statistics` group by gradient";
 $execSql = mysqli_query($link,$sql);
 $title = $execSql->fetch_all(MYSQLI_ASSOC);
-var_dump($title);exit;
+
 mysqli_close($link);
 ?>
 <!DOCTYPE html>
@@ -101,19 +101,22 @@ mysqli_close($link);
     <span style="font-size:18px;color:#262626;float:left;margin-left:25px;">龙分期></span>
     <span style="font-size:18px;color:#F44B2A;float:left;">分配梯度统计</span>
 </div>
+<form action="" id = 'formDate' name="formDate">
+    <input type="hidden" value="tenwin_assign_gradient_statistics" name="code">
 <div class="search">
     时间范围:
-    <date></date>
+    <input type="date" value="" id = "create_date_start">&nbsp;&nbsp;至&nbsp;&nbsp;&nbsp;<input type="date" value="" id = "create_date_end">
     梯度:
-    <select name="gradient_title" id="gradient_title">
+    <select name="gradient" id="gradient_title">
         <option value="-1">全部梯度</option>
         <?php foreach($title as $k=>$v){?>
-            <option value="<?php echo $k?>"><?php echo $v['gradient_title']?></option>
+            <option value="<?php echo $v['gradient']?>"><?php echo $v['gradient_title']?></option>
         <?php }?>
     </select>
     <input type='button' value="查询" class="btn" id="search">
     <input type='button' value="下载" class="btn" id="download">
 </div>
+</form>
 <h2>分配梯度统计(数量版)</h2>
 <div id="example_num" class="moneyTable"></div>
 <h2>分配梯度统计(百分比版)</h2>
@@ -180,6 +183,36 @@ mysqli_close($link);
         }
         hot_per.setDataAtCell(headInfo);
         exportPlugin_per.downloadFile('csv', {filename: '分配梯度统计(百分比版)'});
+    })
+
+    //查询
+    selectTotal = function (){
+        var info = $("#formDate").serialize();
+        var create_date_start = $('#create_date_start').val();
+        var create_date_end = $('#create_date_end').val();
+        info = info +"&"+"create_date_start="+create_date_start;
+        info = info +"&"+"create_date_end="+create_date_end;
+        $.ajax({
+            url:"tengwinController.php",
+            type:"post",
+            data:info,
+            success:function(re){
+                var result = JSON.parse(re);
+                //console.log(re);
+                var dataNum = result['dataNum'];
+                var dataPer = result['dataPer'];
+                hot_num.updateSettings({
+                    data: dataNum
+                });
+                hot_per.updateSettings({
+                    data: dataPer
+                });
+            }
+        });
+    }
+
+    $('#search').click(function(){
+        selectTotal();
     })
 
 

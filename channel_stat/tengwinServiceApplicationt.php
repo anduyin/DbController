@@ -18,7 +18,7 @@ $query = "SELECT {$field} FROM `tengwin_service_application` ORDER BY registrati
 $result = mysqli_query($link, $query);
 $arr = $result->fetch_all(MYSQLI_ASSOC);
 //计算总服务金额
-$total_sql = "SELECT sum(amount) as total FROM `tengwin_service_application`";
+$total_sql = "SELECT COALESCE(sum(amount),0) as total FROM `tengwin_service_application`";
 $result_total = mysqli_query($link, $total_sql);
 $total_money = $result_total->fetch_assoc();
 //查询总数
@@ -92,13 +92,11 @@ $json = json_encode($arr);
             background-image: none;
         }
 
-        #example {
-            margin-left:300px;
+        #example,#formDate,#money {
+            margin-left:200px;
         }
-        .search {
-            text-align: center;
-            margin-bottom: 10px;
-        }
+
+
     </style>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>服务申请列表</title>
@@ -116,11 +114,8 @@ $json = json_encode($arr);
     <span style="font-size:18px;color:#F44B2A;float:left;">服务申请列表</span>
 </div>
 <form action="" id = 'formDate' name="formDate">
-    <input type="hidden" value="search" name="code">
-<div class="search">
-    <input type='button' value="下载" class="btn" id="download">
-    <input type="button" value="查询" id = "search" class="btn">
-</div>
+    <input type="hidden" value="tengwin_service_application" name="code">
+
 <div>
     付款单号:<input type="text" name = 'serial_num' value="" placeholder="付款单号">
     姓名:<input type="text" name = 'electrical_name' value="" placeholder="姓名">
@@ -142,14 +137,21 @@ $json = json_encode($arr);
             <option value="<?php echo $value['group_name'];?>"><?php echo $value['group_name'];?></option>
             <?php }?>
         </select>
+    </div>
+    <div>
     业务员:<input type="text" value="" name="customer_user" placeholder="请输入业务员姓名">
     转化人员:<input type="text" value="" name="transfer_user" placeholder="请输入转化人员姓名">
     注册时间:<input type="date" value="" id = "registration_time_start">&nbsp;&nbsp;至&nbsp;&nbsp;&nbsp;<input type="date" value="" id = "registration_time_end">
     渠道来源:<input type="text" value="" name="agent_name" placeholder="请输入渠道来源">
     渠道推荐人:<input type="text" value="" name="channel_name" placeholder="请输入渠道推荐人">
-</div>
+        <input type='button' value="下载" class="btn" id="download">
+        <input type="button" value="查询" id = "search" class="btn">
+    </div>
+
+
+
 </form>
-<div>
+<div id="money">
     <span>服务总金额:</span>
     <span id="total_money"><?php echo $total_money['total'].'元';?></span>
 </div>
@@ -172,11 +174,11 @@ $json = json_encode($arr);
     var container = document.getElementById('example');
     var hot = new Handsontable(container, {
         data: data,
-        rowHeaders: true,
+        rowHeaders: false,
         colHeaders: <?php echo $headjson?>,
         colWidths: 120,
         filters: true,
-        dropdownMenu: true,
+        dropdownMenu: false,
         manualColumnFreeze: true,
         forceNumeric: true,
         manualColumnResize: true,
