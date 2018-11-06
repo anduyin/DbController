@@ -78,11 +78,11 @@ mysqli_close($link);
             background-image: none;
         }
 
-        #example {
-            margin-left:300px;
+        #example_num,#example_per {
+            margin-left:200px;
         }
         .search {
-            text-align: center;
+            margin-left:200px;
             margin-bottom: 10px;
         }
     </style>
