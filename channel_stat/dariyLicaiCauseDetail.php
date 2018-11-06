@@ -1,14 +1,19 @@
 <?php
-/* 存管收费数据表展示文件
- *  */
-	
+
 	require_once '../Common.php';
-	require_once 'loanSalaryController_ph.php';
-	$query = "SELECT * FROM `ph_loan_salary` ORDER BY loan_time DESC ";
-	$result = mysqli_query($link, $query);
+    require_once '../main.php';
+	$main = new main();
+	$field = $main->getColumnName($link,'dariy_licai_clause_detail');
+	$head = $main->getColumnComment($link,'dariy_licai_clause_detail');
+	//查询最新一天的实际回款日期
+    $query_time = "SELECT true_repay_date FROM `dariy_licai_clause_detail` GROUP BY true_repay_date order by true_repay_date desc ";
+    $result_time = mysqli_query($link,$query_time);
+    $time = $result_time->fetch_all(MYSQLI_ASSOC);
+    //默认展示最新一天数据
+    $query = "SELECT {$field} FROM `dariy_licai_clause_detail` WHERE true_repay_date = '{$time[0]['true_repay_date']}' order by true_repay_date desc ";
+    $result = mysqli_query($link, $query);
 	$arr = $result->fetch_all(MYSQLI_ASSOC);
 	mysqli_close($link);
-	$head = array('笔数(笔)','放款(元)','服务费(元)','类型','日期');
 	$headjson = json_encode($head);
 	$json = json_encode($arr);
 ?>
@@ -101,9 +106,12 @@
 			text-align: center;
 			margin-bottom: 10px;
 		}
+        img {
+            display: none;
+        }
 	</style>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>放款与服务费</title>
+	<title>每日回款用户明细</title>
 	<script src="../jquery-3.2.1.min.js"></script>
     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -112,22 +120,20 @@
 
 </head>
 <body style="background-color:#fff;">
-	
 	<div style="text-align: center" class="top">
-		<span style="font-size:18px;color:#262626;float:left;margin-left:25px;">财务(存管)></span>
-        <span style="font-size:18px;color:#F44B2A;float:left;">放款与服务费</span>
+		<span style="font-size:18px;color:#262626;float:left;margin-left:25px;">理财端日报 -> </span>
+        <span style="font-size:18px;color:#F44B2A;float:left;">每日回款用户明细</span>
     </div>
 		<div class="search">
 			<input type="date" value="" id = "time1">
 			&nbsp;&nbsp;至&nbsp;&nbsp;
 			<input type="date" value="" id = "time2">
-			<input type="button" value="查询(总额)" id = "searchTotal" class="btn">
-			<input type="button" value="查询(分类汇总)" id = "searchGroup" class="btn">
+            <input type='button' value="查询" class="btn" id="search">
 			<input type='button' value="下载" class="btn" id="download">
 		</div>
 	
 	<div id="example" class="moneyTable"></div>
-	<div id='total'></div>
+
 		
 		
 </body>
@@ -138,38 +144,18 @@ var hot = new Handsontable(container, {
     data: data,
     rowHeaders: true,
     colHeaders: <?php echo $headjson?>,
-    colWidths: 150,
+    colWidths: [140,80,180,180,180,180,140,140,140,140,180,180,180,140],
     filters: true,
-    dropdownMenu: true,
+    dropdownMenu: false,
     manualColumnFreeze: true,
     forceNumeric: true,
     manualColumnResize: true,
     sortIndicator: true,
     columnSorting: true,
+    readOnly:true,
     fixedRowsBottom: 2
 });
 
-	function countTotal(){
-		var num_total = 0;
-		var cost_total = 0;
-        var service_fee_total = 0;
-		var number = hot.getDataAtCol(0);
-		var cost = hot.getDataAtCol(1);
-        var servic_fee = hot.getDataAtCol(2);
-		for(var i=0;i<cost.length;i++){
-            number[i]==null?number[i]=0:number[i];
-            cost[i]==null?cost[i]=0:cost[i];
-            servic_fee[i]==null?servic_fee[i]=0:servic_fee[i];
-			num_total += parseInt(number[i]);
-			cost_total += parseInt(cost[i]);
-            service_fee_total += parseInt(servic_fee[i]);
-		}
-		hot.alter('insert_row', null);
-		var endRow = (hot.countRows())-1;
-		var dataInfo = [];
-			dataInfo = [[endRow, 0, num_total],[endRow, 1, cost_total],[endRow, 2, service_fee_total],[endRow, 3, '总计']];
-			hot.setDataAtCell(dataInfo);
-	}
 	var exportPlugin = hot.getPlugin('exportFile');
 	$("#download").click(function(){
 		hot.alter('insert_row', 0);
@@ -179,40 +165,32 @@ var hot = new Handsontable(container, {
 				headInfo[h] = [0,h,head[h]];
 			}
 		hot.setDataAtCell(headInfo);
-		exportPlugin.downloadFile('csv', {filename: '放款与服务费'});
+		exportPlugin.downloadFile('csv', {filename: '每日回款用户明细'});
 	})
-
-	//查询(总额)
-	$("#searchTotal").click(function(){
+	//查询
+	$("#search").click(function(){
 		var info={};
 		var time1 = $("#time1").val();
 		var time2 = $("#time2").val();
 		info[0] = time1;
 		info[1] = time2;
-		info[2] = 'searchTotal';		
+		info[2] = 'dariy_licai_clause_detail';
 		if((time1=="")||(time2=="")){
 				alert("时间范围选择错误");
 				return;
 			}
 		$.ajax({
-			url:"loanSalaryController_ph.php",
+			url:"channel_stat_controller.php",
 			type:"post",
 			data:info,
 			success:function(re){
-			    hot.clear();
-				var searchTotal = JSON.parse(re);
+				hot.clear();
+				var search = JSON.parse(re);
 				hot.updateSettings({
-   					data: searchTotal
+   					data: search
 				});
 			}
 		});
-	})
-	//查询(分类汇总)
-	$("#searchGroup").click(function(){
-        countTotal();
 	});
-
-	
 </script>
-
 </html>

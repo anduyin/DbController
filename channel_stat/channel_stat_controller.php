@@ -24,6 +24,25 @@ function searchDate($link){
 	echo  json_encode($arr);
 }
 
+
+function searchDariyLicaiCauseDetailData($link){
+    $main = new main();
+    $fleid = $main->getColumnName($link,'dariy_licai_clause_detail');
+    $time1 = $_POST[0];
+    $time2  = $_POST[1];
+    if($time1==$time2){
+        $query = "SELECT {$fleid} FROM `dariy_licai_clause_detail` where true_repay_date = \"$time1\" order by `true_repay_date` desc";
+    }else{
+        $query = "SELECT {$fleid} FROM `dariy_licai_clause_detail` where true_repay_date >= \"$time1\" and true_repay_date <= \"$time2\" order by `true_repay_date` desc";
+    }
+    $result = mysqli_query($link, $query);
+    $arr = $result->fetch_all(MYSQLI_NUM);
+    mysqli_close($link);
+    echo  json_encode($arr);
+}
+
 if($_POST&&$_POST[2]=='search'){
 	searchDate($link);
+}elseif($_POST&&$_POST[2]=='dariy_licai_clause_detail'){
+    searchDariyLicaiCauseDetailData($link);
 }
