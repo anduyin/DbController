@@ -20,13 +20,13 @@ class main
             echo "参数为空:表名!";
             exit;
         }
-        $fsql = "SELECT COLUMN_NAME FROM information_schema. COLUMNS WHERE table_name = '{$tableName}'";
-        $fieldR = mysqli_query($link, $fsql);
+        $sql = "SELECT COLUMN_NAME FROM information_schema.COLUMNS WHERE table_name = '{$tableName}'";
+        $fieldR = mysqli_query($link,$sql);
         $fieldArray = $fieldR->fetch_all(MYSQLI_ASSOC);
         unset($fieldArray[0]);
         $fields = [];
         foreach ($fieldArray as $key => $value) {
-            $fields[] = $value['COLUMN_NAME'];
+            $fields[] = "`".$value['COLUMN_NAME']."`";
         }
         $field = implode(",", $fields);
         return $field;
