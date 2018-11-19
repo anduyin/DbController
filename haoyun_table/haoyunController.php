@@ -128,12 +128,12 @@ function searchGradient($link){
     }
     //求分配梯度统计(数量版)
     $field_num = "create_date,assignment,follow,deal,follow_deal,pay,front_end_income,back_end_income";
-    $query = "select {$field_num} from `tenwin_assign_gradient_statistics` {$trueWhere} ORDER BY create_date DESC ";
+    $query = "select {$field_num} from `haoyun_assign_gradient_statistics` {$trueWhere} ORDER BY create_date DESC ";
     $result = mysqli_query($link, $query);
     $arr_num = $result->fetch_all(MYSQLI_ASSOC);
     //分配梯度统计(百分比版)
     $field_per = "create_date,follow_rate,deal_rate,follow_deal_rate,pay_rate";
-    $query = "select {$field_per} from `tenwin_assign_gradient_statistics` {$trueWhere} ORDER BY create_date DESC ";
+    $query = "select {$field_per} from `haoyun_assign_gradient_statistics` {$trueWhere} ORDER BY create_date DESC ";
     $result = mysqli_query($link, $query);
     $arr_per = $result->fetch_all(MYSQLI_ASSOC);
     mysqli_close($link);
@@ -142,7 +142,7 @@ function searchGradient($link){
     echo  json_encode($json);
 }
 //梯度按跟进时间排序表查询
-function searchtengweiGradientFollow($link){
+function searchHaoyunGradientFollow($link){
     $where = [];
     $gradient = $_POST['gradient'];
     $trueWhere = '';
@@ -163,38 +163,8 @@ function searchtengweiGradientFollow($link){
         $trueWhere = " WHERE ".$trueWhere;
     }
     $main = new main();
-    $field = $main->getColumnName($link,'tenwin_gradient_follow');
-    $query = "select {$field} from `tenwin_gradient_follow` {$trueWhere} ORDER BY create_time DESC ";
-    $result = mysqli_query($link, $query);
-    $arr = $result->fetch_all(MYSQLI_ASSOC);
-    mysqli_close($link);
-    $json['data'] = $arr;
-    echo  json_encode($json);
-}
-//贷款部业务员分析报表查询
-function searchTenwinPerformanceList($link){
-    $where = [];
-    $month = $_POST['month'];
-    $trueWhere = '';
-    if($month!='-1'){
-        $where['month ='] = "\"".$month."\"";
-    }
-    $maxNum = count($where);
-    $numWhere = 0;
-    foreach($where as $k=>$v){
-        $numWhere++;
-        if($maxNum == $numWhere){
-            $trueWhere .= $k.$v;
-        }else{
-            $trueWhere .= $k.$v.' AND ';
-        }
-    }
-    if($maxNum){
-        $trueWhere = " WHERE ".$trueWhere;
-    }
-    $main = new main();
-    $field = $main->getColumnName($link,'tenwin_performanceList');
-    $query = "select {$field} from `tenwin_performanceList` {$trueWhere} ORDER BY update_date DESC ";
+    $field = $main->getColumnName($link,'haoyun_gradient_follow');
+    $query = "select {$field} from `haoyun_gradient_follow` {$trueWhere} ORDER BY create_time DESC ";
     $result = mysqli_query($link, $query);
     $arr = $result->fetch_all(MYSQLI_ASSOC);
     mysqli_close($link);
@@ -204,11 +174,10 @@ function searchTenwinPerformanceList($link){
 
 if($_POST&&$_POST['code']=='tengwin_service_application') {
     searchTotal($link);
-}elseif($_POST&&$_POST['code']=='tenwin_assign_gradient_statistics'){
+}elseif($_POST&&$_POST['code']=='haoyun_assign_gradient_statistics'){
     searchGradient($link);
-}elseif($_POST&&$_POST['code']=='tenwin_gradient_follow'){
-    searchtengweiGradientFollow($link);
-}elseif($_POST&&$_POST['code']=='tenwin_performanceList') {
-    searchTenwinPerformanceList($link);
+}elseif($_POST&&$_POST['code']=='haoyun_gradient_follow'){
+    searchHaoyunGradientFollow($link);
 }
+
 

@@ -1,17 +1,13 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: 89171
- * Date: 2018/9/18
- * Time: 18:12
- */
-
 require_once '../Common.php';
-$query = "SELECT * FROM `licai_monthly_bonus_fee` ORDER BY give_month DESC ";
+require_once '../main.php';
+$main = new main();
+$field = $main->getColumnName($link,'licai_monthly_overview_of_tag');
+$head = $main->getColumnComment($link,'licai_monthly_overview_of_tag');
+$query = "SELECT {$field} FROM `licai_monthly_overview_of_tag` ORDER BY invest_month DESC ";
 $result = mysqli_query($link, $query);
 $arr = $result->fetch_all(MYSQLI_ASSOC);
 mysqli_close($link);
-$head = array('ID','发放月份','工具名称','面额(元)','使用张数','抵用券费用(元)','对应投资金额','对应年化金额');
 $headjson = json_encode($head);
 $json = json_encode($arr);
 ?>
@@ -75,7 +71,7 @@ $json = json_encode($arr);
 		}
 	</style>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>优惠券费用</title>
+	<title>平台整体概况(用户分类)</title>
 	<script src="../jquery-3.2.1.min.js"></script>
     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -87,7 +83,7 @@ $json = json_encode($arr);
 
 	<div style="text-align: center" class="top">
 		<span style="font-size:18px;color:#262626;float:left;margin-left:25px;">理财端月报 ></span>
-        <span style="font-size:18px;color:#F44B2A;float:left;">优惠券费用</span>
+        <span style="font-size:18px;color:#F44B2A;float:left;">平台整体概况(用户分类)</span>
     </div>
 		<div class="search">
 			<input type='button' value="下载" class="btn" id="download">
@@ -121,7 +117,7 @@ var hot = new Handsontable(container, {
 				headInfo[h] = [0,h,head[h]];
 			}
 		hot.setDataAtCell(headInfo);
-		exportPlugin.downloadFile('csv', {filename: '优惠券费用'});
+		exportPlugin.downloadFile('csv', {filename: '平台整体概况(用户分类)'});
 	})
 </script>
 </script>

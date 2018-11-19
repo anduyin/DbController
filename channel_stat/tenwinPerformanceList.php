@@ -1,16 +1,23 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: 89171
- * Date: 2018/8/27
- * Time: 11:36
- */
+
 require_once '../Common.php';
-$query = "SELECT * FROM `xssd_received_money` ORDER BY create_time DESC ";
+require_once '../main.php';
+$main = new main();
+//查询最新一月
+$time_sql= "SELECT `month` FROM `tenwin_performanceList` ORDER BY `month` DESC limit 1";
+$time_res = mysqli_query($link,$time_sql);
+$time = $time_res->fetch_all(MYSQLI_ASSOC);
+$field = $main->getColumnName($link,'tenwin_performanceList');
+$head = $main->getColumnComment($link,'tenwin_performanceList');
+$query = "SELECT {$field} FROM `tenwin_performanceList` WHERE `month` = '{$time[0]['month']}' ORDER BY `update_date` DESC ";
+
 $result = mysqli_query($link, $query);
 $arr = $result->fetch_all(MYSQLI_ASSOC);
+//获取月份
+$sql = "select `month` from `tenwin_performanceList` group by month";
+$execSql = mysqli_query($link,$sql);
+$month = $execSql->fetch_all(MYSQLI_ASSOC);
 mysqli_close($link);
-$head = array('日期','金额区间','存管_用户总余额','存管_用户人数','存管_待收金额','存管_待收人数','托管_用户总余额','托管_用户人数','托管_待收金额','托管_待收人数');
 $headjson = json_encode($head);
 $json = json_encode($arr);
 ?>
@@ -77,7 +84,7 @@ $json = json_encode($arr);
         }
     </style>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>放款与服务费</title>
+    <title>贷款部业务员分析报表</title>
     <script src="../jquery-3.2.1.min.js"></script>
     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -88,12 +95,23 @@ $json = json_encode($arr);
 <body style="background-color:#fff;">
 
 <div style="text-align: center" class="top">
-    <span style="font-size:18px;color:#262626;float:left;margin-left:25px;">理财端日报></span>
-    <span style="font-size:18px;color:#F44B2A;float:left;">待收及资金站岗情况</span>
+    <span style="font-size:18px;color:#262626;float:left;margin-left:25px;">龙分期></span>
+    <span style="font-size:18px;color:#F44B2A;float:left;">贷款部业务员分析报表</span>
 </div>
-<div class="search">
-    <input type='button' value="下载" class="btn" id="download">
-</div>
+<form action="" id = 'formDate' name="formDate">
+    <input type="hidden" value="tenwin_performanceList" name="code">
+    <div class="search">
+        月份:
+        <select name="gradient" id="gradient_title">
+            <option value="-1">全部月份</option>
+            <?php foreach($month as $k=>$v){?>
+                <option value="<?php echo $v['month']?>"><?php echo $v['month']?></option>
+            <?php }?>
+        </select>
+        <input type='button' value="查询" class="btn" id="search">
+        <input type='button' value="下载" class="btn" id="download">
+    </div>
+</form>
 <div id="example" class="moneyTable"></div>
 
 
@@ -126,11 +144,30 @@ $json = json_encode($arr);
             headInfo[h] = [0,h,head[h]];
         }
         hot.setDataAtCell(headInfo);
-        exportPlugin.downloadFile('csv', {filename: '待收及资金站岗情况'});
+        exportPlugin.downloadFile('csv', {filename: '贷款部业务员分析报表'});
     })
 
 
+    //查询
+    selectTotal = function (){
+        var info = $("#formDate").serialize();
+        $.ajax({
+            url:"tengwinController.php",
+            type:"post",
+            data:info,
+            success:function(re){
+                var result = JSON.parse(re);
+                hot.updateSettings({
+                    data: result.data
+                });
 
+            }
+        });
+    }
+
+    $('#search').click(function(){
+        selectTotal();
+    })
 
 </script>
 </html>

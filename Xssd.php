@@ -195,6 +195,14 @@ if(strpos($permission,'longfenqi')===false){
                                     <i class="menu-expand"></i>
                                 </a>
                             </li>
+                            <li>
+                                <a href="channel_stat/assetsStateStatistics.php" target="frame1">
+                                    <span class="menu-text">
+                                    每日上标放款量
+                                    </span>
+                                    <i class="menu-expand"></i>
+                                </a>
+                            </li>
                         </ul>                            
                     </li>
                     <li class = 'finance'>
@@ -637,6 +645,14 @@ if(strpos($permission,'longfenqi')===false){
                                     <i class="menu-expand"></i>
                                 </a>
                             </li>
+                            <li>
+                                <a href="licai_monthly_overview_of_tag/view.php" target="frame1">
+                                    <span class="menu-text">
+                                        平台整体概况(用户分类)
+                                    </span>
+                                    <i class="menu-expand"></i>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     <li class = 'longfenqi'>
@@ -703,9 +719,50 @@ if(strpos($permission,'longfenqi')===false){
                                 </a>
                             </li>
                             <li>
-                                <a href="channel_stat/assetsStateStatistics.php" target="frame1">
+                                <a href="channel_stat/tenwinPerformanceList.php" target="frame1">
                                     <span class="menu-text">
-                                    每日上标放款量
+                                    贷款部业务员分析报表
+                                    </span>
+                                    <i class="menu-expand"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class = 'longfenqi'>
+                        <a href="#" class="menu-dropdown">
+                            <i class="menu-icon fa fa-user"></i>
+                            <span class="menu-text">龙提额</span>
+                            <i class="menu-expand"></i>
+                        </a>
+                        <ul class="submenu">
+                            <li>
+                                <a href="haoyun_table/haoyunCommissionerFollowCount.php" target="frame1">
+                                    <span class="menu-text">
+                                    各专员跟进数表
+                                    </span>
+                                    <i class="menu-expand"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="haoyun_table/haoyunGradientFollow.php" target="frame1">
+                                    <span class="menu-text">
+                                    梯度按跟进时间排序表
+                                    </span>
+                                    <i class="menu-expand"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="haoyun_table/haoyunDailyIncome.php" target="frame1">
+                                    <span class="menu-text">
+                                    每日营收统计
+                                    </span>
+                                    <i class="menu-expand"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="haoyun_table/haoyunAssignGradientStatistics.php" target="frame1">
+                                    <span class="menu-text">
+                                    分配梯度统计
                                     </span>
                                     <i class="menu-expand"></i>
                                 </a>

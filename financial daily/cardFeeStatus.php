@@ -113,6 +113,7 @@ $json = json_encode($arr);
         manualColumnResize: true,
         sortIndicator: true,
         columnSorting: true,
+        readOnly:true,
         fixedRowsBottom: 2
     });
 

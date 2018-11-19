@@ -3,11 +3,23 @@
 require_once '../Common.php';
 require_once '../main.php';
 $main = new main();
-$field = $main->getColumnName($link,'tenwin_gradient_follow');
 $head = $main->getColumnComment($link,'tenwin_gradient_follow');
-$query = "SELECT {$field} FROM `tenwin_gradient_follow` ORDER BY create_time DESC ";
+//查询最新一天
+$time_sql= "SELECT update_date FROM `tenwin_gradient_follow` ORDER BY create_time DESC limit 1";
+$time_res = mysqli_query($link,$time_sql);
+$time = $time_res->fetch_all(MYSQLI_ASSOC);
+$query = "SELECT `admin_real_name`,
+	from_unixtime(create_time) as `create_time`,
+	from_unixtime(update_time) as `update_time`,
+	`gradient`,
+	`gradient_title`,
+	`update_date` FROM `tenwin_gradient_follow` WHERE  update_date = '{$time[0]['update_date']}' ORDER BY create_time DESC ";
 $result = mysqli_query($link, $query);
 $arr = $result->fetch_all(MYSQLI_ASSOC);
+//获取梯度
+$sql = "select gradient_title,gradient from `tenwin_gradient_follow` group by gradient";
+$execSql = mysqli_query($link,$sql);
+$title = $execSql->fetch_all(MYSQLI_ASSOC);
 mysqli_close($link);
 $headjson = json_encode($head);
 $json = json_encode($arr);
@@ -89,9 +101,20 @@ $json = json_encode($arr);
     <span style="font-size:18px;color:#262626;float:left;margin-left:25px;">龙分期></span>
     <span style="font-size:18px;color:#F44B2A;float:left;">梯度按跟进时间排序表</span>
 </div>
-<div class="search">
-    <input type='button' value="下载" class="btn" id="download">
-</div>
+<form action="" id = 'formDate' name="formDate">
+    <input type="hidden" value="tenwin_gradient_follow" name="code">
+    <div class="search">
+        梯度:
+        <select name="gradient" id="gradient_title">
+            <option value="-1">全部梯度</option>
+            <?php foreach($title as $k=>$v){?>
+                <option value="<?php echo $v['gradient']?>"><?php echo $v['gradient_title']?></option>
+            <?php }?>
+        </select>
+        <input type='button' value="查询" class="btn" id="search">
+        <input type='button' value="下载" class="btn" id="download">
+    </div>
+</form>
 <div id="example" class="moneyTable"></div>
 
 
@@ -127,7 +150,26 @@ $json = json_encode($arr);
         exportPlugin.downloadFile('csv', {filename: '梯度按跟进时间排序表'});
     })
 
+    //查询
+    selectTotal = function (){
+        var info = $("#formDate").serialize();
+        $.ajax({
+            url:"tengwinController.php",
+            type:"post",
+            data:info,
+            success:function(re){
+                var result = JSON.parse(re);
+                hot.updateSettings({
+                    data: result.data
+                });
 
+            }
+        });
+    }
+
+    $('#search').click(function(){
+        selectTotal();
+    })
 
 
 </script>
