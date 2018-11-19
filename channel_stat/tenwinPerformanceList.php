@@ -102,7 +102,7 @@ $json = json_encode($arr);
     <input type="hidden" value="tenwin_performanceList" name="code">
     <div class="search">
         月份:
-        <select name="gradient" id="gradient_title">
+        <select name="month" id="month">
             <option value="-1">全部月份</option>
             <?php foreach($month as $k=>$v){?>
                 <option value="<?php echo $v['month']?>"><?php echo $v['month']?></option>
