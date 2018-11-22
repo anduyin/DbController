@@ -767,6 +767,14 @@ if(strpos($permission,'longfenqi')===false){
                                     <i class="menu-expand"></i>
                                 </a>
                             </li>
+                            <li>
+                                <a href="haoyun_table/haoyunFromTenwinIncome.php" target="frame1">
+                                    <span class="menu-text">
+                                    浩云从腾分期导流的营收
+                                    </span>
+                                    <i class="menu-expand"></i>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                 </ul>
